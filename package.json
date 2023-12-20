@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node downloadLatest.js && sh download_unzip.sh"
+  },
   "dependencies": {
     "jsdom": "^23.0.1"
   }
