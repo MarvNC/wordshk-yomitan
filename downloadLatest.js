@@ -2,7 +2,7 @@ const { JSDOM } = require('jsdom');
 const fs = require('fs');
 const path = require('path');
 
-const domain = 'https://cantowords.com';
+const domain = 'https://words.hk';
 const requestURL = `${domain}/faiman/request_data/`;
 const csvURLtxt = 'csv.gz.URLs.txt';
 
