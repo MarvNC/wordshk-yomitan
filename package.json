@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "start": "node downloadLatest.js && sh download_unzip.sh"
+    "start": "npm run getURL && npm run download",
+    "getURL": "node downloadLatest.js",
+    "download": "sh download_unzip.sh"
   },
   "dependencies": {
     "jsdom": "^23.0.1"

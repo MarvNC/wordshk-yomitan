@@ -13,15 +13,16 @@ while IFS= read -r url || [ -n "$url" ]; do
     # Extract filename from URL
     filename=$(basename "$url")
 
-    # Check if the file or extracted file already exists
-    if [ -f "$csv_dir/$filename" ] || [ -f "$csv_dir/${filename%.*}" ]; then
+    # Check if the file already exists
+    if [ -f "$csv_dir/$filename" ]; then
       echo "File $filename already exists. Skipping..."
       continue
+    else
+      echo "File $filename does not exist. Downloading..."
+      # Download the file
+      echo "Downloading $filename..."
+      wget "$url" -O "$csv_dir/$filename"
     fi
-
-    # Download the file
-    echo "Downloading $filename..."
-    wget "$url" -O "$csv_dir/$filename"
 
     # Unzip the downloaded file
     echo "Unzipping $filename..."
