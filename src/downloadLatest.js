@@ -1,6 +1,6 @@
-const { JSDOM } = require('jsdom');
-const fs = require('fs');
-const path = require('path');
+import { JSDOM } from 'jsdom';
+import fs from 'fs';
+import path from 'path';
 
 const domain = 'https://words.hk';
 const requestURL = `${domain}/faiman/request_data/`;
@@ -61,9 +61,9 @@ function downloadCSVs(dom) {
   const csvLinks = csvLinkAnchors.map((a) => `${domain}${a.href}`);
 
   // Write to file
-  const filePath = path.join(__dirname, csvURLtxt);
-  fs.writeFileSync(filePath, csvLinks.join('\n'));
-  console.log(`Wrote csv links to ${filePath}`);
+  // const filePath = path.join(__dirname, csvURLtxt);
+  fs.writeFileSync(csvURLtxt, csvLinks.join('\n'));
+  console.log(`Wrote csv links to ${csvURLtxt}`);
 }
 
 downloadLatest();

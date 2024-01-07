@@ -1,10 +1,11 @@
 {
   "scripts": {
     "start": "npm run getURL && npm run download",
-    "getURL": "node downloadLatest.js",
-    "download": "sh download_unzip.sh"
+    "getURL": "node src/downloadLatest.js",
+    "download": "sh src/download_unzip.sh"
   },
   "dependencies": {
-    "jsdom": "^23.0.1"
+    "jsdom": "^23.0.1",
+    "yomichan-dict-builder": "^2.0.2"
   }
 }

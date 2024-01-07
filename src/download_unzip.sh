@@ -6,6 +6,9 @@ csv_dir="csvs"
 # Create the directory if it doesn't exist
 mkdir -p "$csv_dir"
 
+# Delete contents of the directory if it exists
+rm -rf "$csv_dir"/*
+
 # Read each line in the file and process
 while IFS= read -r url || [ -n "$url" ]; do
   # Ignore empty lines
