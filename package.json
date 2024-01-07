@@ -5,7 +5,9 @@
     "download": "sh src/download_unzip.sh"
   },
   "dependencies": {
+    "csv-parser": "^3.0.0",
     "jsdom": "^23.0.1",
     "yomichan-dict-builder": "^2.0.2"
-  }
+  },
+  "type": "module"
 }
