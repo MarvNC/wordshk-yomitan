@@ -8,11 +8,192 @@ import {
 import path from 'path';
 import csv from 'csv-parser';
 
+/**
+ * Represents a CSV record.
+ * @typedef {Object} CsvRecord
+ * @property {string} id - The unique identifier for the record.
+ * @property {string} headword - The main word or expression in the entry.
+ * @property {string} entry - The full text of the dictionary entry.
+ * @property {string} variants - The different forms or spellings of the headword.
+ * @property {string} warning - Any warnings related to the entry.
+ * @property {string} public - Whether the entry is public or not.
+ */
+
 const dataFolder = './csvs';
 
+const csvHeaders = ['id', 'headword', 'entry', 'variants', 'warning', 'public'];
+
 (async () => {
-  const { allCsv, wordposCsv, dateString } = await getCSVInfo();
+  const { allCsv, dateString } = await getCSVInfo();
+  const allCsvPath = path.join(dataFolder, allCsv);
+  const data = await readCSVAsync(allCsvPath);
+  console.log(`Read ${data.length} entries from ${allCsvPath}`);
+  for (const entry of data) {
+    const parsedEntry = parseEntry(entry);
+    if (!parsedEntry) {
+      continue;
+    }
+    console.log(parsedEntry);
+  }
 })();
+
+/**
+ *
+ * @param {CsvRecord} entry
+ */
+function parseEntry(entry) {
+  const id = parseInt(entry.id);
+  if (isNaN(id)) {
+    throw new Error(`Invalid id: ${entry.id}`);
+  }
+
+  const headwords = entry.headword.split(',').map((headword) => {
+    const [text, reading] = headword.split(':');
+    if (!text || !reading) {
+      throw new Error(`Invalid headword: ${headword}`);
+    }
+    return {
+      text,
+      reading,
+    };
+  });
+
+  if (entry.entry === '未有內容 NO DATA') {
+    return false;
+  }
+
+  const { tags, explanations } = parseEntryText(entry.entry);
+
+  return {
+    id,
+    headwords,
+    tags,
+    explanations,
+  };
+}
+
+/**
+ *
+ * @param {string} text
+ */
+function parseEntryText(text) {
+  const entryLines = text.split('\n');
+  if (!entryLines[0].startsWith('(pos:')) {
+    throw new Error(`Entry does not start with (pos:): ${entryLines[0]}`);
+  }
+  // tags in format (pos:名詞)(label:書面語)
+  const firstLine = entryLines.shift();
+  if (!firstLine) {
+    throw new Error(`Entry is empty: ${text}`);
+  }
+  const tags = firstLine.split(')(').map((tag) => {
+    tag = tag.replace(/[()]/g, '');
+    const [name, value] = tag.split(':');
+    return {
+      name,
+      value,
+    };
+  });
+  if (tags.length === 0) {
+    throw new Error(`No tags found: ${firstLine}`);
+  }
+
+  const explanations = parseExplanations(entryLines);
+
+  return {
+    tags,
+    explanations,
+  };
+}
+
+/**
+ *
+ * @param {string[]} entryLines
+ * @returns {Array.<{yue: *, eng: *, examples: Array.<{yue: *, eng: *}>}>} Description of the return value
+ */
+function parseExplanations(entryLines) {
+  const explanations = [];
+  const explanation = {};
+
+  const parseNextTwoLines = (entryLines) => {
+    const possibleLangs = ['yue', 'eng', 'zho'];
+    // Consume lines as long as the line starts with a lang tag
+    const lines = [];
+    while (possibleLangs.includes(entryLines[0]?.split(':')[0])) {
+      lines.push(entryLines.shift());
+    }
+    if (lines.length === 0) {
+      throw new Error(
+        `Expected at least one line, got ${entryLines.join('\n')}`
+      );
+    }
+    if (lines.length > 3) {
+      throw new Error(
+        `Expected at most three lines, got ${entryLines.join('\n')}`
+      );
+    }
+    const yue = lines.find((line) => line.startsWith('yue:'))?.split('yue:')[1];
+    const eng = lines.find((line) => line.startsWith('eng:'))?.split('eng:')[1];
+    const zho = lines.find((line) => line.startsWith('zho:'))?.split('zho:')[1];
+    return {
+      yue,
+      eng,
+      zho,
+    };
+  };
+
+  const explanationElem = entryLines[0];
+  if (explanationElem == '<explanation>') {
+    entryLines.shift();
+  }
+
+  const { yue, eng } = parseNextTwoLines(entryLines);
+  explanation.yue = yue;
+  explanation.eng = eng;
+
+  const examples = [];
+
+  while (entryLines[0] === '<eg>') {
+    entryLines.shift();
+    examples.push(parseNextTwoLines(entryLines));
+  }
+  explanation.examples = examples;
+  explanations.push(explanation);
+
+  if (entryLines[0] === '----') {
+    entryLines.shift();
+    explanations.push(...parseExplanations(entryLines));
+  }
+
+  if (entryLines.length !== 0) {
+    throw new Error(`Expected no more lines, got ${entryLines.join('\n')}`);
+  }
+  return explanations;
+}
+
+async function readCSVAsync(allCsvPath) {
+  return new Promise((resolve, reject) => {
+    const results = [];
+    fs.createReadStream(allCsvPath)
+      .pipe(
+        csv({
+          headers: csvHeaders,
+          strict: true,
+          skipLines: 2,
+          quote: '"',
+        })
+      )
+      .on('data', (data) => {
+        results.push(data);
+      })
+      .on('end', () => {
+        resolve(results);
+      })
+      .on('error', (error) => {
+        reject(error);
+      });
+  });
+}
 
 async function getCSVInfo() {
   // Get contents of data folder
@@ -29,14 +210,8 @@ async function getCSVInfo() {
   const dateString = date.toISOString().split('T')[0];
   console.log(`Date of data: ${dateString}`);
 
-  const wordposCsv = files.find((file) => file.startsWith('wordpos-'));
-  if (!wordposCsv) {
-    throw new Error('No wordpos- file found');
-  }
-
   return {
     allCsv,
-    wordposCsv,
     dateString,
   };
 }
