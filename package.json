@@ -2,7 +2,8 @@
   "scripts": {
     "start": "npm run getURL && npm run download",
     "getURL": "node src/downloadLatest.js",
-    "download": "sh src/download_unzip.sh"
+    "download": "sh src/download_unzip.sh",
+    "build": "node src/convert.js"
   },
   "dependencies": {
     "csv-parser": "^3.0.0",
