@@ -5,7 +5,7 @@ import {
   KanjiEntry,
   TermEntry,
 } from 'yomichan-dict-builder';
-import path from 'path';
+import path, { parse } from 'path';
 import csv from 'csv-parser';
 
 /**
@@ -69,7 +69,14 @@ function parseEntry(entry) {
 
   const entryLines = entry.entry.split('\n');
   const tags = parseTags(entryLines);
-  const explanations = parseExplanations(entryLines);
+  const explanationsText = entryLines.join('\n');
+  const explanationsTexts = explanationsText.split('\n----\n').map((text) => {
+    return text.split('\n');
+  });
+  const explanations = [];
+  for (const explanationText of explanationsTexts) {
+    explanations.push(parseExplanation(explanationText));
+  }
 
   return {
     id,
@@ -109,10 +116,9 @@ function parseTags(entryLines) {
 /**
  *
  * @param {string[]} entryLines
- * @returns {{yue: string[], eng: string[], examples: {yue: string[], eng: string[], zho: string[], jpn: string[]}[]}[]}
+ * @returns {{yue: string[], eng: string[], examples: {yue: string[], eng: string[], zho: string[], jpn: string[]}[]}}
  */
-function parseExplanations(entryLines) {
-  const explanations = [];
+function parseExplanation(entryLines) {
   const explanation = {};
 
   /**
@@ -176,18 +182,11 @@ function parseExplanations(entryLines) {
     examples.push(parseLanguages(entryLines));
   }
   explanation.examples = examples;
-  explanations.push(explanation);
-
-  if (entryLines[0] === '----') {
-    entryLines.shift();
-    const nextExplanation = parseExplanations(entryLines);
-    explanations.push(...nextExplanation);
-  }
 
   if (entryLines.length !== 0) {
     throw new Error(`Expected no more lines, got ${entryLines.join('\n')}`);
   }
-  return explanations;
+  return explanation;
 }
 
 async function readCSVAsync(allCsvPath) {
