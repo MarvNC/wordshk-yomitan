@@ -20,10 +20,11 @@ type Tag = {
 };
 
 type Explanation = {
-  [K in Language]?: string[];
-  examples: {
-    [K in Language]?: string[];
-  };
+  [key in Language]?: string[];
+};
+
+type Example = {
+  [key in Language]?: string[];
 };
 
 type Entry =
@@ -33,4 +34,5 @@ type Entry =
       headwords: Headword[];
       tags: Tag[];
       explanations: Explanation[];
+      examples: Example[];
     };
