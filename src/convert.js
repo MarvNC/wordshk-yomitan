@@ -116,7 +116,6 @@ function parseTags(entryLines) {
 /**
  *
  * @param {string[]} entryLines
- * @returns {{yue: string[], eng: string[], examples: {yue: string[], eng: string[], zho: string[], jpn: string[]}[]}}
  */
 function parseExplanation(entryLines) {
   const explanation = {};
