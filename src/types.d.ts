@@ -27,12 +27,14 @@ type Example = {
   [key in Language]?: string[];
 };
 
-type Entry =
+type DictionaryEntry =
   | false
   | {
       id: number;
       headwords: Headword[];
       tags: Tag[];
-      explanations: Explanation[];
-      examples: Example[];
+      glosses: {
+        explanation: Explanation;
+        examples: Example[];
+      }[];
     };

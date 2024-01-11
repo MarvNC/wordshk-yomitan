@@ -45,6 +45,7 @@ const csvHeaders = ['id', 'headword', 'entry', 'variants', 'warning', 'public'];
 /**
  *
  * @param {CsvRecord} entry
+ * @returns {DictionaryEntry}
  */
 function parseEntry(entry) {
   const id = parseInt(entry.id);
@@ -73,16 +74,16 @@ function parseEntry(entry) {
   const explanationsTexts = explanationsText.split('\n----\n').map((text) => {
     return text.split('\n');
   });
-  const explanations = [];
+  const glosses = [];
   for (const explanationText of explanationsTexts) {
-    explanations.push(parseExplanation(explanationText));
+    glosses.push(parseExplanation(explanationText));
   }
 
   return {
     id,
     headwords,
     tags,
-    explanations,
+    glosses,
   };
 }
 
@@ -118,6 +119,9 @@ function parseTags(entryLines) {
  * @param {string[]} entryLines
  */
 function parseExplanation(entryLines) {
+  /**
+   * @type {Explanation}
+   */
   const explanation = {};
 
   /**
@@ -174,18 +178,21 @@ function parseExplanation(entryLines) {
   explanation.yue = yue;
   explanation.eng = eng;
 
+  /**
+   * @type {Example[]}
+   */
   const examples = [];
 
   while (entryLines[0] === '<eg>') {
     entryLines.shift();
     examples.push(parseLanguages(entryLines));
   }
-  explanation.examples = examples;
 
   if (entryLines.length !== 0) {
     throw new Error(`Expected no more lines, got ${entryLines.join('\n')}`);
   }
-  return explanation;
+
+  return { explanation, examples };
 }
 
 async function readCSVAsync(allCsvPath) {
