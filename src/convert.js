@@ -29,11 +29,16 @@ const csvHeaders = ['id', 'headword', 'entry', 'variants', 'warning', 'public'];
   const data = await readCSVAsync(allCsvPath);
   console.log(`Read ${data.length} entries from ${allCsvPath}`);
   for (const entry of data) {
-    const parsedEntry = parseEntry(entry);
-    if (!parsedEntry) {
-      continue;
+    try {
+      const parsedEntry = parseEntry(entry);
+      if (!parsedEntry) {
+        continue;
+      }
+    } catch (e) {
+      if (entry.public !== '未公開') {
+        console.error(`Error parsing entry ${entry.id}: ${e.message}`);
+      }
     }
-    console.log(parsedEntry);
   }
 })();
 
@@ -62,7 +67,9 @@ function parseEntry(entry) {
     return false;
   }
 
-  const { tags, explanations } = parseEntryText(entry.entry);
+  const entryLines = entry.entry.split('\n');
+  const tags = parseTags(entryLines);
+  const explanations = parseExplanations(entryLines);
 
   return {
     id,
@@ -74,17 +81,16 @@ function parseEntry(entry) {
 
 /**
  *
- * @param {string} text
+ * @param {string[]} entryLines
  */
-function parseEntryText(text) {
-  const entryLines = text.split('\n');
+function parseTags(entryLines) {
   if (!entryLines[0].startsWith('(pos:')) {
     throw new Error(`Entry does not start with (pos:): ${entryLines[0]}`);
   }
   // tags in format (pos:名詞)(label:書面語)
   const firstLine = entryLines.shift();
   if (!firstLine) {
-    throw new Error(`Entry is empty: ${text}`);
+    throw new Error(`Entry is empty: ${entryLines.toString()}`);
   }
   const tags = firstLine.split(')(').map((tag) => {
     tag = tag.replace(/[()]/g, '');
@@ -97,19 +103,13 @@ function parseEntryText(text) {
   if (tags.length === 0) {
     throw new Error(`No tags found: ${firstLine}`);
   }
-
-  const explanations = parseExplanations(entryLines);
-
-  return {
-    tags,
-    explanations,
-  };
+  return tags;
 }
 
 /**
  *
  * @param {string[]} entryLines
- * @returns {Array.<{yue: *, eng: *, examples: Array.<{yue: *, eng: *}>}>} Description of the return value
+ * @returns {{yue: string[], eng: string[], examples: {yue: string[], eng: string[], zho: string[], jpn: string[]}[]}[]}
  */
 function parseExplanations(entryLines) {
   const explanations = [];
@@ -118,10 +118,9 @@ function parseExplanations(entryLines) {
   /**
    *
    * @param {string[]} entryLines
-   * @returns {{yue: string[], eng: string[], zho: string[]}}
    */
   const parseLanguages = (entryLines) => {
-    const possibleLangs = ['yue', 'eng', 'zho'];
+    const possibleLangs = ['yue', 'eng', 'zho', 'jpn'];
     // Consume lines as long as the line starts with a lang tag
     /**
      * @type {string[]}
@@ -142,10 +141,12 @@ function parseExplanations(entryLines) {
     const yue = lines.filter((line) => line?.startsWith('yue:'));
     const eng = lines.filter((line) => line?.startsWith('eng:'));
     const zho = lines.filter((line) => line?.startsWith('zho:'));
+    const jpn = lines.filter((line) => line?.startsWith('jpn:'));
     return {
       yue,
       eng,
       zho,
+      jpn,
     };
   };
 
@@ -169,7 +170,8 @@ function parseExplanations(entryLines) {
 
   if (entryLines[0] === '----') {
     entryLines.shift();
-    explanations.push(...parseExplanations(entryLines));
+    const nextExplanation = parseExplanations(entryLines);
+    explanations.push(...nextExplanation);
   }
 
   if (entryLines.length !== 0) {
