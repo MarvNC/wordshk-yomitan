@@ -115,26 +115,33 @@ function parseExplanations(entryLines) {
   const explanations = [];
   const explanation = {};
 
-  const parseNextTwoLines = (entryLines) => {
+  /**
+   *
+   * @param {string[]} entryLines
+   * @returns {{yue: string[], eng: string[], zho: string[]}}
+   */
+  const parseLanguages = (entryLines) => {
     const possibleLangs = ['yue', 'eng', 'zho'];
     // Consume lines as long as the line starts with a lang tag
+    /**
+     * @type {string[]}
+     */
     const lines = [];
     while (possibleLangs.includes(entryLines[0]?.split(':')[0])) {
-      lines.push(entryLines.shift());
+      const line = entryLines.shift();
+      if (!line) {
+        throw new Error('Expected line, got undefined');
+      }
+      lines.push(line);
     }
     if (lines.length === 0) {
       throw new Error(
         `Expected at least one line, got ${entryLines.join('\n')}`
       );
     }
-    if (lines.length > 3) {
-      throw new Error(
-        `Expected at most three lines, got ${entryLines.join('\n')}`
-      );
-    }
-    const yue = lines.find((line) => line.startsWith('yue:'))?.split('yue:')[1];
-    const eng = lines.find((line) => line.startsWith('eng:'))?.split('eng:')[1];
-    const zho = lines.find((line) => line.startsWith('zho:'))?.split('zho:')[1];
+    const yue = lines.filter((line) => line?.startsWith('yue:'));
+    const eng = lines.filter((line) => line?.startsWith('eng:'));
+    const zho = lines.filter((line) => line?.startsWith('zho:'));
     return {
       yue,
       eng,
@@ -147,7 +154,7 @@ function parseExplanations(entryLines) {
     entryLines.shift();
   }
 
-  const { yue, eng } = parseNextTwoLines(entryLines);
+  const { yue, eng } = parseLanguages(entryLines);
   explanation.yue = yue;
   explanation.eng = eng;
 
@@ -155,7 +162,7 @@ function parseExplanations(entryLines) {
 
   while (entryLines[0] === '<eg>') {
     entryLines.shift();
-    examples.push(parseNextTwoLines(entryLines));
+    examples.push(parseLanguages(entryLines));
   }
   explanation.examples = examples;
   explanations.push(explanation);
