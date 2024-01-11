@@ -120,7 +120,17 @@ function parseExplanations(entryLines) {
    * @param {string[]} entryLines
    */
   const parseLanguages = (entryLines) => {
-    const possibleLangs = ['yue', 'eng', 'zho', 'jpn'];
+    const possibleLangs = [
+      'yue',
+      'eng',
+      'zho',
+      'jpn',
+      'kor',
+      'vie',
+      'lzh',
+      'por',
+      'deu',
+    ];
     // Consume lines as long as the line starts with a lang tag
     /**
      * @type {string[]}
