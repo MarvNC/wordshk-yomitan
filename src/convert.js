@@ -14,5 +14,5 @@ const dataFolder = './csvs';
 (async () => {
   const { allCsv, dateString } = await getCSVInfo(dataFolder);
   const allCsvPath = path.join(dataFolder, allCsv);
-  const dictionaryEntries = parseCSVEntries(allCsvPath);
+  const dictionaryEntries = await parseCSVEntries(allCsvPath);
 })();
