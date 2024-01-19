@@ -132,18 +132,34 @@ function parseLanguageData(text) {
    */
   const languageData = {};
   const lines = text.split('\n');
+  let currentLang = '';
+  let currentLangData = '';
   for (const line of lines) {
-    const [lang, ...text] = line.split(':');
-    if (!lang || !text) {
-      throw new Error(`Invalid language data: ${line}`);
+    // Check if first few characters are a language followed by :
+    const matchedLangs = possibleLangs.filter((lang) => {
+      return line.startsWith(`${lang}:`);
+    });
+    if (matchedLangs.length > 1) {
+      throw new Error(`Multiple languages found in line: ${line}`);
     }
-    if (!possibleLangs.includes(lang)) {
-      throw new Error(`Invalid language: ${lang}`);
+    if (matchedLangs.length === 0) {
+      // If no language is found, this is a continuation of the previous line
+      currentLangData += '\n' + line;
+      continue;
     }
-    if (!languageData[lang]) {
-      languageData[lang] = [];
+    // Else a language is found
+    currentLang = matchedLangs[0];
+    currentLangData = line.replace(`${currentLang}:`, '').trim();
+    // If a language is found, this is a new language
+    if (currentLang) {
+      if (!currentLangData) {
+        throw new Error(`No data found for language ${currentLang}`);
+      }
+      if (!languageData[currentLang]) {
+        languageData[currentLang] = [];
+      }
+      languageData[currentLang].push(currentLangData);
     }
-    languageData[lang].push(text.join(':').trim());
   }
   return languageData;
 }

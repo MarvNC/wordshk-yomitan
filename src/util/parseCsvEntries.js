@@ -19,12 +19,8 @@ async function parseCSVEntries(allCsvPath) {
     ) {
       continue;
     }
-    try {
-      const parsedEntry = parseEntry(entry);
-      dictionaryEntries.push(parsedEntry);
-    } catch (e) {
-      console.error(`Error parsing entry ${entry.id}: ${e.message}`);
-    }
+    const parsedEntry = parseEntry(entry);
+    dictionaryEntries.push(parsedEntry);
   }
   return dictionaryEntries;
 }
