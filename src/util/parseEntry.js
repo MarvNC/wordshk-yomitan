@@ -1,19 +1,4 @@
-const possibleLangs = [
-  'yue',
-  'eng',
-  'zho',
-  'jpn',
-  'kor',
-  'vie',
-  'lzh',
-  'por',
-  'deu',
-  'fra',
-  'mnc',
-  'lat',
-  'tib',
-  '量詞',
-];
+import { languages } from '../constants.js';
 
 /**
  *
@@ -173,7 +158,7 @@ function parseLanguageData(text) {
       continue;
     }
     // Check if the language is a possible language
-    if (!possibleLangs.includes(matchedLang)) {
+    if (!languages[matchedLang]) {
       throw new Error(`Invalid language: ${matchedLang}`);
     }
     // Else a language is found
