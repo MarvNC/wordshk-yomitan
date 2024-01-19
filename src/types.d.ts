@@ -32,15 +32,11 @@ type Tag = {
 };
 
 type Gloss = {
-  explanation: Explanation;
-  examples: Example[];
+  explanation: LanguageData;
+  examples: LanguageData[];
 };
 
-type Explanation = {
-  [key in Language]?: string[];
-};
-
-type Example = {
+type LanguageData = {
   [key in Language]?: string[];
 };
 

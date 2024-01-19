@@ -100,70 +100,52 @@ function parseTags(entryLines) {
  * @returns {Gloss}
  */
 function parseGloss(entryText) {
-  const entryLines = entryText.split('\n');
+  // Remove first line explanations
+  entryText = entryText.replace('<explanation>\n', '');
+  const [explanationText, ...examplesTexts] = entryText.split('\n<eg>\n');
+
   /**
-   * @type {Explanation}
+   * @type {LanguageData}
    */
-  const explanation = {};
+  const explanation = parseLanguageData(explanationText);
 
   /**
-   *
-   * @param {string[]} entryLines
-   */
-  const parseLanguages = (entryLines) => {
-    // Consume lines as long as the line starts with a lang tag
-    /**
-     * @type {string[]}
-     */
-    const lines = [];
-    while (possibleLangs.includes(entryLines[0]?.split(':')[0])) {
-      const line = entryLines.shift();
-      if (!line) {
-        throw new Error('Expected line, got undefined');
-      }
-      lines.push(line);
-    }
-    if (lines.length === 0) {
-      throw new Error(
-        `Expected at least one line, got ${entryLines.join('\n')}`
-      );
-    }
-    const yue = lines.filter((line) => line?.startsWith('yue:'));
-    const eng = lines.filter((line) => line?.startsWith('eng:'));
-    const zho = lines.filter((line) => line?.startsWith('zho:'));
-    const jpn = lines.filter((line) => line?.startsWith('jpn:'));
-    return {
-      yue,
-      eng,
-      zho,
-      jpn,
-    };
-  };
-
-  const explanationElem = entryLines[0];
-  if (explanationElem == '<explanation>') {
-    entryLines.shift();
-  }
-
-  const { yue, eng } = parseLanguages(entryLines);
-  explanation.yue = yue;
-  explanation.eng = eng;
-
-  /**
-   * @type {Example[]}
+   * @type {LanguageData[]}
    */
   const examples = [];
-
-  while (entryLines[0] === '<eg>') {
-    entryLines.shift();
-    examples.push(parseLanguages(entryLines));
-  }
-
-  if (entryLines.length !== 0) {
-    throw new Error(`Expected no more lines, got ${entryLines.join('\n')}`);
+  for (const exampleText of examplesTexts) {
+    examples.push(parseLanguageData(exampleText));
   }
 
   return { explanation, examples };
+}
+
+/**
+ * Parses a language data multiline string in the format "lang:text\nlang:text"
+ * Some texts are multiline
+ * @param {string} text
+ * @returns {LanguageData}
+ */
+function parseLanguageData(text) {
+  /**
+   * @type {LanguageData}
+   */
+  const languageData = {};
+  const lines = text.split('\n');
+  for (const line of lines) {
+    const [lang, ...text] = line.split(':');
+    if (!lang || !text) {
+      throw new Error(`Invalid language data: ${line}`);
+    }
+    if (!possibleLangs.includes(lang)) {
+      throw new Error(`Invalid language: ${lang}`);
+    }
+    if (!languageData[lang]) {
+      languageData[lang] = [];
+    }
+    languageData[lang].push(text.join(':').trim());
+  }
+  return languageData;
 }
 
 export { parseEntry };

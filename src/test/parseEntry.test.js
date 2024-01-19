@@ -28,8 +28,8 @@ const testCases = {
     glosses: [
       {
         explanation: {
-          yue: ['yue:D電池（量詞：粒'],
-          eng: ['eng:D cells battery'],
+          yue: ['D電池（量詞：粒）'],
+          eng: ['D cells battery'],
         },
         examples: [],
       },
