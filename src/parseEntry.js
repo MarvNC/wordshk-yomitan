@@ -20,28 +20,20 @@ function parseEntry(entry) {
   if (isNaN(id)) {
     throw new Error(`Invalid id: ${entry.id}`);
   }
-
-  const headwords = entry.headword.split(',').map((headword) => {
-    const [text, reading] = headword.split(':');
-    if (!text || !reading) {
-      throw new Error(`Invalid headword: ${headword}`);
-    }
-    return {
-      text,
-      reading,
-    };
-  });
-
   if (entry.entry === '未有內容 NO DATA') {
     return false;
   }
 
+  const headwords = parseHeadwords(entry.headword);
+
   const entryLines = entry.entry.split('\n');
   const tags = parseTags(entryLines);
+
   const explanationsText = entryLines.join('\n');
   const explanationsTexts = explanationsText.split('\n----\n').map((text) => {
-    return text.split('\n');
+    return text;
   });
+
   /**
    * @type {Gloss[]}
    */
@@ -56,6 +48,24 @@ function parseEntry(entry) {
     tags,
     glosses,
   };
+}
+
+/**
+ * Parses a headword string in the format "text:reading,text:reading"
+ * @param {string} headwordString
+ * @returns {Headword[]}
+ */
+function parseHeadwords(headwordString) {
+  return headwordString.split(',').map((headword) => {
+    const [text, reading] = headword.split(':');
+    if (!text || !reading) {
+      throw new Error(`Invalid headword: ${headword}`);
+    }
+    return {
+      text,
+      reading,
+    };
+  });
 }
 
 /**
@@ -86,11 +96,12 @@ function parseTags(entryLines) {
 }
 
 /**
- *
- * @param {string[]} entryLines
+ * Accepts a gloss entry string and returns the parsed gloss
+ * @param {string} entryText
  * @returns {Gloss}
  */
-function parseGloss(entryLines) {
+function parseGloss(entryText) {
+  const entryLines = entryText.split('\n');
   /**
    * @type {Explanation}
    */
