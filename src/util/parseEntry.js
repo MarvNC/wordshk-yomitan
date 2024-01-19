@@ -134,8 +134,28 @@ function parseLanguageData(text) {
    */
   const languageData = {};
   const lines = text.split('\n');
+
   let currentLang = '';
   let currentLangData = '';
+
+  /**
+   * Adds the currently stored language data to the languageData object
+   */
+  function addCurrentLangData() {
+    if (!currentLang) {
+      return;
+    }
+    if (!currentLangData) {
+      throw new Error(`No data found for language ${currentLang}`);
+    }
+    if (!languageData[currentLang]) {
+      languageData[currentLang] = [];
+    }
+    languageData[currentLang].push(currentLangData.trim());
+    currentLang = '';
+    currentLangData = '';
+  }
+
   for (const line of lines) {
     // Check if first few characters are a language followed by :
     const matchedLangs = possibleLangs.filter((lang) => {
@@ -146,23 +166,15 @@ function parseLanguageData(text) {
     }
     if (matchedLangs.length === 0) {
       // If no language is found, this is a continuation of the previous line
-      currentLangData += '\n' + line;
+      currentLangData += '\n' + line.trim();
       continue;
     }
     // Else a language is found
+    addCurrentLangData();
     currentLang = matchedLangs[0];
     currentLangData = line.replace(`${currentLang}:`, '').trim();
-    // If a language is found, this is a new language
-    if (currentLang) {
-      if (!currentLangData) {
-        throw new Error(`No data found for language ${currentLang}`);
-      }
-      if (!languageData[currentLang]) {
-        languageData[currentLang] = [];
-      }
-      languageData[currentLang].push(currentLangData);
-    }
   }
+  addCurrentLangData();
   return languageData;
 }
 

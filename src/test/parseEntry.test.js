@@ -215,6 +215,162 @@ const expectedEntries = [
       },
     ],
   },
+  {
+    id: 90185,
+    headwords: [
+      {
+        text: '天干地支',
+        reading: 'tin1 gon1 dei6 zi1',
+      },
+    ],
+    tags: [
+      {
+        name: 'pos',
+        value: '名詞',
+      },
+      {
+        name: 'sim',
+        value: '干支',
+      },
+    ],
+    glosses: [
+      {
+        explanation: {
+          yue: [
+            '「#天干」同「#地支」嘅合稱。十天干分別係「#甲#乙#丙#丁#戊#己#庚#辛#壬#癸」。 十二地支係：「#子#丑#寅#卯#辰#巳#午#未#申#酉#戌#亥」。 天干同地支組合就成為以「#甲子」為首嘅六十干支循環。\n\n干支循環通常用嚟計年份。天干亦可以獨立用嚟順序將物件命名，第一個叫「甲」、第二個叫「乙」，如此類推。用法類似西方嘅「A, B, C」 或 「α, β, γ」。中國傳統紀時間嘅方法係將一日分成十二個時辰，每一個時辰由一個地支表示，「子時」係半夜 (11pm 至 1am)，如此類推。',
+          ],
+          eng: [
+            'Literally "Heavenly Stems and Earthly Branches". It is a traditional Chinese system of counting. Heavenly Stems and Earthly Branches are collectively known as "Stem-Branch".\n\nThe 10 Heavenly Stems are 甲(gaap3) 乙(jyut6) 丙(bing2) 丁(ding1) 戊(mou6) 己(gei2) 庚(gang1) 辛(san1) 壬(jam4) 癸(gwai3).\n\nThe 12 Earthly Branches are 子(zi2) 丑(cau2) 寅(jan4) 卯(maau5) 辰(san4) 巳(zi6) 午(ng5) 未(mei6) 申(san1) 酉(jau5) 戌(seot1) 亥(hoi6). Each Heavenly Stem is paired with an Earthly Branch to form the "stem-branch" sexagenary (i.e. 60 element) cycle that starts with 甲子 (gaap3 zi2)\n\nThe sexagenary cycle is often used for counting years in the Chinese calendar. Heavenly Stems are also used independently to name things in a particular order -- the first is labeled "gaap3", the second "jyut6", the third "bing2", and so on. It is similar to how "A, B, C" and "α, β, γ" are used in western cultures. Earthly Branches are also traditionally used to denote time. One day is divided into twelve slots called Chinese-hours (#時辰), starting from 子時 (zi2 si4), which is 11pm to 1am.',
+          ],
+        },
+        egs: [
+          {
+            yue: ['乙等 / 乙級 (jyut6 dang2 / jyut6 kap1)'],
+            eng: ['B grade'],
+          },
+          {
+            yue: ['甲級戰犯 (gaap3 kap1 zin3 faan2)'],
+            eng: ['Class A war criminal'],
+          },
+          {
+            yue: ['戊戌變法 (mou6 seot1 bin3 faat3)'],
+            eng: [
+              "The Hundred Days' Reform of the Qing Dynasty (it is called 戊戌變法 because it occurred in the 戊戌 year)",
+            ],
+          },
+          {
+            yue: ['辛亥革命 (san1 hoi6 gaap3 ming6)'],
+            eng: ['The Xinhai Revolution (Pinyin romanization)'],
+          },
+          {
+            yue: ['子時 (zi2 si4)'],
+            eng: ['midnight'],
+          },
+          {
+            yue: ['午時 (ng5 si4)'],
+            eng: ['noon'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 97033,
+    headwords: [
+      {
+        text: '着',
+        reading: 'zoek6',
+      },
+      {
+        text: '著',
+        reading: 'zoek6',
+      },
+    ],
+    tags: [
+      {
+        name: 'pos',
+        value: '詞綴',
+      },
+      {
+        name: 'label',
+        value: '書面語',
+      },
+    ],
+    glosses: [
+      {
+        explanation: {
+          yue: ['表示動作、狀態進行緊、持續緊，類似「#住」、「#下」'],
+          eng: [
+            "to express that an action is in process and a state is prolonged; similar to '#住' zyu6 or '#下' haa5",
+          ],
+        },
+        egs: [
+          {
+            zho: ['痛並快樂着 (tung3 bing6 faai3 lok6 zoek6)'],
+            yue: ['痛住開心 (tung3 zyu6 hoi1 sam1)'],
+            eng: ['feeling painful and happy'],
+          },
+          {
+            zho: [
+              '走着走着就到了課室。 (zau2 zoek6 zau2 zoek6 zau6 dou3 liu5 fo3 sat1.)',
+            ],
+            yue: [
+              '行下行下就到咗班房。 (haang4 haa5 haang4 haa5 zau6 dou3 zo2 baan1 fong2.)',
+            ],
+            eng: ['Walking, (we) have arrived at the classroom.'],
+          },
+          {
+            zho: ['他們正説着話呢。 (taa1 mun4 zing3 syut3 zoek6 waa6 ne1.)'],
+            yue: ['佢哋講緊嘢啊。 (keoi5 dei6 gong2 gan2 je5 aa3.)'],
+            eng: ['They are talking.'],
+          },
+          {
+            zho: ['等着瞧。 (dang2 zoek6 ciu4.)'],
+            yue: ['睇下點。 (tai2 haa5 dim2.)'],
+            eng: ["(Let's) wait and see."],
+          },
+        ],
+      },
+      {
+        explanation: {
+          yue: ['動詞後綴，表示動作達到目的、有結果；類似「#到」（dou2）'],
+          eng: [
+            'verbal suffix to mean that the aim of an action has been achieved or its result has come out; similar to #到 dou2',
+          ],
+        },
+        egs: [
+          {
+            zho: ['你的錶我沒見着。 (nei5 dik1 biu1 ngo5 mut6 gin3 zoek6.)'],
+            yue: ['你隻錶我見唔到。 (nei5 zek3 biu1 ngo5 gin3 m4 dou2.)'],
+            eng: ['I have not found your watch.'],
+          },
+        ],
+      },
+      {
+        explanation: {
+          yue: ['喺句尾出現，表示祈使'],
+          eng: ['used at the end of a sentence to form an imperative'],
+        },
+        egs: [
+          {
+            zho: ['聽着。 (ting3 zoek6.)'],
+            yue: ['聽住。 (teng1 zyu6.)'],
+            eng: ['Listen.'],
+          },
+          {
+            zho: [
+              '你可好生給我應付着。 (nei5 ho2 hou2 sang1 kap1 ngo5 jing3 fu6 zoek6.)',
+            ],
+            yue: [
+              '你好好哋同我應付下。 (nei5 hou2 hou2 dei2 tung4 ngo5 jing3 fu6 haa5.)',
+              '你小心啲同我應付下。 (nei5 siu2 sam1 di1 tung4 ngo5 jing3 fu6 haa5.)',
+            ],
+            eng: ['Handle this well (for me).'],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /**
