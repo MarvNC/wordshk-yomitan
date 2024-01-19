@@ -8,6 +8,11 @@ const possibleLangs = [
   'lzh',
   'por',
   'deu',
+  'fra',
+  'mnc',
+  'lat',
+  'tib',
+  '量詞',
 ];
 
 /**
@@ -158,20 +163,22 @@ function parseLanguageData(text) {
 
   for (const line of lines) {
     // Check if first few characters are a language followed by :
-    const matchedLangs = possibleLangs.filter((lang) => {
-      return line.startsWith(`${lang}:`);
-    });
-    if (matchedLangs.length > 1) {
-      throw new Error(`Multiple languages found in line: ${line}`);
-    }
-    if (matchedLangs.length === 0) {
+    const matchedLang = line.split(':')[0];
+    if (
+      // !(matchedLang.length >= 2 && matchedLang.length <= 4) ||
+      !line.includes(':')
+    ) {
       // If no language is found, this is a continuation of the previous line
       currentLangData += '\n' + line.trim();
       continue;
     }
+    // Check if the language is a possible language
+    if (!possibleLangs.includes(matchedLang)) {
+      throw new Error(`Invalid language: ${matchedLang}`);
+    }
     // Else a language is found
     addCurrentLangData();
-    currentLang = matchedLangs[0];
+    currentLang = matchedLang;
     currentLangData = line.replace(`${currentLang}:`, '').trim();
   }
   addCurrentLangData();

@@ -1,7 +1,6 @@
 import {
   Dictionary,
   DictionaryIndex,
-  KanjiEntry,
   TermEntry,
 } from 'yomichan-dict-builder';
 import path, { parse } from 'path';

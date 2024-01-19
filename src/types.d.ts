@@ -10,16 +10,24 @@ type CsvRecord = {
   public: string; // Whether the entry is public or not.
 };
 
-type Language =
-  | 'yue'
-  | 'eng'
-  | 'zho'
-  | 'jpn'
-  | 'kor'
-  | 'vie'
-  | 'lzh'
-  | 'por'
-  | 'deu';
+type LanguageArray = [
+  'yue',
+  'eng',
+  'zho',
+  'jpn',
+  'kor',
+  'vie',
+  'lzh',
+  'por',
+  'deu',
+  'fra',
+  'mnc',
+  'lat',
+  'tib',
+  '量詞'
+];
+
+type Language = LanguageArray[number];
 
 type Headword = {
   text: string;
