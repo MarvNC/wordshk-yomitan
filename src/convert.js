@@ -6,8 +6,8 @@ import {
 } from 'yomichan-dict-builder';
 import path, { parse } from 'path';
 
-import { getCSVInfo, readCSVAsync } from './csvHandler.js';
-import { parseEntry } from './parseEntry.js';
+import { getCSVInfo, readCSVAsync } from './util/csvHandler.js';
+import { parseEntry } from './util/parseEntry.js';
 
 const dataFolder = './csvs';
 
