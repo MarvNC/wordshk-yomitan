@@ -146,7 +146,7 @@ function parseLanguageData(text) {
       return;
     }
     if (!currentLangData) {
-      throw new Error(`No data found for language ${currentLang}`);
+      return;
     }
     if (!languageData[currentLang]) {
       languageData[currentLang] = [];
