@@ -33,7 +33,7 @@ type Tag = {
 
 type Gloss = {
   explanation: LanguageData;
-  examples: LanguageData[];
+  egs: LanguageData[];
 };
 
 type LanguageData = {

@@ -112,12 +112,12 @@ function parseGloss(entryText) {
   /**
    * @type {LanguageData[]}
    */
-  const examples = [];
+  const egs = [];
   for (const exampleText of examplesTexts) {
-    examples.push(parseLanguageData(exampleText));
+    egs.push(parseLanguageData(exampleText));
   }
 
-  return { explanation, examples };
+  return { explanation, egs };
 }
 
 /**
