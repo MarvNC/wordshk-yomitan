@@ -3,12 +3,16 @@
     "start": "npm run getURL && npm run download",
     "getURL": "node src/downloadLatest.js",
     "download": "sh src/scripts/download_unzip.sh",
-    "build": "node src/convert.js"
+    "build": "node src/convert.js",
+    "test": "ava"
   },
   "dependencies": {
     "csv-parser": "^3.0.0",
     "jsdom": "^23.0.1",
     "yomichan-dict-builder": "^2.2.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "ava": "^6.0.1"
+  }
 }
