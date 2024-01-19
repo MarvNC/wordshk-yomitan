@@ -27,7 +27,7 @@ function parseEntry(entry) {
   const tags = parseTags(entryLines);
 
   const explanationsText = entryLines.join('\n');
-  const explanationsTexts = explanationsText.split('\n----\n').map((text) => {
+  const explanationsTexts = explanationsText.split('\r\n----\r\n').map((text) => {
     return text;
   });
 
@@ -101,8 +101,8 @@ function parseTags(entryLines) {
  */
 function parseGloss(entryText) {
   // Remove first line explanations
-  entryText = entryText.replace('<explanation>\n', '');
-  const [explanationText, ...examplesTexts] = entryText.split('\n<eg>\n');
+  entryText = entryText.replace('<explanation>\r\n', '');
+  const [explanationText, ...examplesTexts] = entryText.split('\r\n<eg>\r\n');
 
   /**
    * @type {LanguageData}
@@ -131,7 +131,7 @@ function parseLanguageData(text) {
    * @type {LanguageData}
    */
   const languageData = {};
-  const lines = text.split('\n');
+  const lines = text.split('\r\n');
   let currentLang = '';
   let currentLangData = '';
   for (const line of lines) {
