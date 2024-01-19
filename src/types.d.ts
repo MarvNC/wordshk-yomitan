@@ -44,11 +44,9 @@ type Example = {
   [key in Language]?: string[];
 };
 
-type DictionaryEntry =
-  | false
-  | {
-      id: number;
-      headwords: Headword[];
-      tags: Tag[];
-      glosses: Gloss[];
-    };
+type DictionaryEntry = {
+  id: number;
+  headwords: Headword[];
+  tags: Tag[];
+  glosses: Gloss[];
+};

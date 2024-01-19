@@ -20,9 +20,6 @@ function parseEntry(entry) {
   if (isNaN(id)) {
     throw new Error(`Invalid id: ${entry.id}`);
   }
-  if (entry.entry === '未有內容 NO DATA') {
-    return false;
-  }
 
   const headwords = parseHeadwords(entry.headword);
 
