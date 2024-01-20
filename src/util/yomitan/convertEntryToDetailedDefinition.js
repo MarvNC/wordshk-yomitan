@@ -29,3 +29,5 @@ function convertEntryToDetailedDefinition(entry) {
     ],
   };
 }
+
+export { convertEntryToDetailedDefinition };
