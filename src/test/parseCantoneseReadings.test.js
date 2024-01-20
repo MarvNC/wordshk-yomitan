@@ -128,6 +128,16 @@ const testCases = [
       { text: '。', reading: '.' },
     ],
   },
+  {
+    text: '𨂾過條溪',
+    reading: 'laam3 gwo3 tiu4 kai1',
+    expected: [
+      { text: '𨂾', reading: 'laam3' },
+      { text: '過', reading: 'gwo3' },
+      { text: '條', reading: 'tiu4' },
+      { text: '溪', reading: 'kai1' },
+    ],
+  },
 ];
 
 for (const { text, reading, expected } of testCases) {
