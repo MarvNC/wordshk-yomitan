@@ -13,11 +13,11 @@ import {
  * [{text: "你", reading: "nei5"}, {text: "get", reading: "get1"}, ...]
  * @param {string} text
  * @param {string} readings
- * @returns {Reading[]}
+ * @returns {TextReadingPair[]}
  */
 function parseCantoneseReadings(text, readings) {
   /**
-   * @type {Reading[]}
+   * @type {TextReadingPair[]}
    */
   const resultArray = [];
 

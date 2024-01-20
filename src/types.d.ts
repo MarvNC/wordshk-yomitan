@@ -29,7 +29,7 @@ type LanguageArray = [
 
 type Language = LanguageArray[number];
 
-type Headword = {
+type TextReadingPair = {
   text: string;
   reading: string;
 };
@@ -50,12 +50,7 @@ type LanguageData = {
 
 type DictionaryEntry = {
   id: number;
-  headwords: Headword[];
+  headwords: TextReadingPair[];
   tags: Tag[];
   glosses: Gloss[];
-};
-
-type Reading = {
-  text: string;
-  reading: string;
 };

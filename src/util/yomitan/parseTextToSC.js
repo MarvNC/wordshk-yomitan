@@ -22,7 +22,7 @@ function convertTextToSC(text, language) {
 
 /**
  * Parses a text string into a structured content object with ruby text for readings
- * @param {Reading} reading
+ * @param {TextReadingPair} reading
  * @returns {import("yomichan-dict-builder/dist/types/yomitan/termbank").StructuredContent}
  */
 function convertReadingToRubySC(reading) {
@@ -37,3 +37,5 @@ function convertReadingToRubySC(reading) {
     ],
   };
 }
+
+export { convertReadingToRubySC, convertTextToSC };

@@ -6,7 +6,7 @@ import { parseCantoneseReadings } from '../util/textHandling/parseCantoneseReadi
  * @typedef {Object} TestCase
  * @property {string} text
  * @property {string} reading
- * @property {Reading[]} expected
+ * @property {TextReadingPair[]} expected
  */
 
 /**
