@@ -7,10 +7,7 @@ import { convertGlossToSC } from './convertGlossToSC.js';
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').DetailedDefinition}
  */
 function convertEntryToDetailedDefinition(entry) {
-  /**
-   * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').DetailedDefinition}
-   */
-  const detailedDefinition = {
+  return {
     type: 'structured-content',
     content: [
       // Headword
@@ -21,11 +18,14 @@ function convertEntryToDetailedDefinition(entry) {
           wordshk: 'definition',
         },
         lang: 'yue',
-        content: entry.glosses.map((gloss) => {
-          return convertGlossToSC(gloss);
-        }),
+        content: {
+          tag: 'ol',
+          data: {
+            wordshk: 'gloss-list',
+          },
+          content: entry.glosses.map(convertGlossToSC),
+        },
       },
     ],
   };
-  return detailedDefinition;
 }
