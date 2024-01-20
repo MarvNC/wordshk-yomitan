@@ -11,12 +11,69 @@ function convertEntryToYomitanTerm(entry) {
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').TermInformation[]}
    */
   const terms = [];
-  // Build sc definition stuff
   return terms;
 }
 
 /**
- * Converts languageData to SC, uses languages.name if it's an explanation, shortName otherwise.
+ * Converts headword(s) to structured content.
+ * @param {Headword[]} headwords
+ */
+function convertHeadwordsToSC(headwords) {
+  const headwordsSCList = headwords.map(headwordToSC);
+  const separator = '・';
+  /**
+   * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
+   */
+  const headwordsSCListWithSeparator = [];
+  for (let i = 0; i < headwordsSCList.length; i++) {
+    headwordsSCListWithSeparator.push(headwordsSCList[i]);
+    if (i !== headwordsSCList.length - 1) {
+      headwordsSCListWithSeparator.push(separator);
+    }
+  }
+  /**
+   * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+   */
+  const sc = {
+    tag: 'div',
+    data: {
+      wordshk: 'headword',
+    },
+    lang: 'yue',
+    content: ['【', ...headwordsSCListWithSeparator, '】'],
+  };
+  return sc;
+}
+
+/**
+ * Converts a headword to structured content.
+ * @param {Headword} headword
+ * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+ */
+function headwordToSC(headword) {
+  /**
+   * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+   */
+  const sc = {
+    tag: 'span',
+    content: headword.text,
+  };
+  // TODO: use parser function when built to add ruby text
+  return sc;
+}
+
+/**
+ * Converts a gloss to structured content.
+ * @param {Gloss} gloss
+ * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+ */
+function convertGlossToSC(gloss) {
+  // TODO
+  return '';
+}
+
+/**
+ * Converts one single languageData to structured content representing a definition/example/sentence.
  * @param {LanguageData} languageData
  * @param {boolean} isExplanation whether the languageData is an explanation
  or an example
