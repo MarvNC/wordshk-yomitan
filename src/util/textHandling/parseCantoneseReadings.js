@@ -53,6 +53,17 @@ function parseCantoneseReadings(text, readings) {
       );
     }
   }
+  // Check if remaining text in either array
+  if (textIndex !== textArray.length) {
+    throw new Error(
+      `Unexpected text "${textArray[textIndex]}" at index ${textIndex}`
+    );
+  }
+  if (readingIndex !== readingsArray.length) {
+    throw new Error(
+      `Unexpected reading "${readingsArray[readingIndex]}" at index ${readingIndex}`
+    );
+  }
 
   return resultArray;
 }
@@ -68,10 +79,6 @@ function splitString(input, punctuations) {
   let current = '';
   for (const char of input) {
     if (/[a-zA-Z0-9]/.test(char)) {
-      // if (current) {
-      //   resultArray.push(current);
-      //   current = '';
-      // }
       current += char;
     } else if (punctuations[char]) {
       if (current) {
