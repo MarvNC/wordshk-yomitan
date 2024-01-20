@@ -11,17 +11,17 @@ import {
  * reading: "nei5 get1 m4 get1 dou2 ngo5 gong2 me1?"
  * =>
  * [{text: "你", reading: "nei5"}, {text: "get", reading: "get1"}, ...]
- * @param {string} text
+ * @param {string} rawText
  * @param {string} readings
  * @returns {TextReadingPair[]}
  */
-function parseCantoneseReadings(text, readings) {
+function parseCantoneseReadings(rawText, readings) {
   /**
    * @type {TextReadingPair[]}
    */
   const resultArray = [];
 
-  const textArray = splitString(text, punctuations);
+  const textArray = splitString(rawText, punctuations);
   const readingsArray = splitString(readings, punctuations);
 
   let readingIndex = 0;
@@ -43,28 +43,25 @@ function parseCantoneseReadings(text, readings) {
       resultArray.push({ text, reading });
       textIndex++;
       readingIndex++;
-    } else if (isTextPunctuation && isReadingJyuutping) {
+    } else if (
+      (isTextPunctuation && isReadingJyuutping) ||
+      (!!text && reading === undefined)
+    ) {
       // Send empty string to reading
       resultArray.push({ text, reading: '' });
       textIndex++;
     } else {
       throw new Error(
-        `Unexpected text "${text}" and reading "${reading}" at index ${i}`
+        `Unexpected text "${text}" and reading "${reading}" at index ${i} in ${rawText}: ${readings}`
       );
     }
   }
-  // Check if remaining text in either array
-  if (textIndex !== textArray.length) {
+  // Check if remaining readings exist
+  if (readingIndex < readingsArray.length) {
     throw new Error(
-      `Unexpected text "${textArray[textIndex]}" at index ${textIndex}`
+      `Unexpected reading "${readingsArray[readingIndex]}" at index ${readingIndex} in ${rawText}: ${readings}`
     );
   }
-  if (readingIndex !== readingsArray.length) {
-    throw new Error(
-      `Unexpected reading "${readingsArray[readingIndex]}" at index ${readingIndex}`
-    );
-  }
-
   return resultArray;
 }
 

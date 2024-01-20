@@ -83,6 +83,26 @@ const testCases = [
       { text: '。', reading: '' },
     ],
   },
+  {
+    text: '嗰個男仔喺我手臂上搣咗一下。',
+    reading: 'go2 go3 naam4 zai2 hai2 ngo5 sau2 bei3 soeng6 mit1 zo2 jat1 haa5',
+    expected: [
+      { text: '嗰', reading: 'go2' },
+      { text: '個', reading: 'go3' },
+      { text: '男', reading: 'naam4' },
+      { text: '仔', reading: 'zai2' },
+      { text: '喺', reading: 'hai2' },
+      { text: '我', reading: 'ngo5' },
+      { text: '手', reading: 'sau2' },
+      { text: '臂', reading: 'bei3' },
+      { text: '上', reading: 'soeng6' },
+      { text: '搣', reading: 'mit1' },
+      { text: '咗', reading: 'zo2' },
+      { text: '一', reading: 'jat1' },
+      { text: '下', reading: 'haa5' },
+      { text: '。', reading: '' },
+    ],
+  },
 ];
 
 for (const { text, reading, expected } of testCases) {
