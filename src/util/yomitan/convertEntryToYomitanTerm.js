@@ -22,3 +22,5 @@ function convertEntryToYomitanTerms(entry) {
 
   return yomitanTerms;
 }
+
+export { convertEntryToYomitanTerms };
