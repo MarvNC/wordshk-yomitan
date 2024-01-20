@@ -170,6 +170,29 @@ const testCases = [
       { text: '。', reading: '.' },
     ],
   },
+  {
+    text: '今晚演出嘅粵劇劇目係《白兔會》。',
+    reading:
+      'gam1 maan5 jin2 ceot1 ge3 jyut6 kek6 kek6 muk6 hai6 baak6 tou3 wui6.',
+    expected: [
+      { text: '今', reading: 'gam1' },
+      { text: '晚', reading: 'maan5' },
+      { text: '演', reading: 'jin2' },
+      { text: '出', reading: 'ceot1' },
+      { text: '嘅', reading: 'ge3' },
+      { text: '粵', reading: 'jyut6' },
+      { text: '劇', reading: 'kek6' },
+      { text: '劇', reading: 'kek6' },
+      { text: '目', reading: 'muk6' },
+      { text: '係', reading: 'hai6' },
+      { text: '《', reading: '' },
+      { text: '白', reading: 'baak6' },
+      { text: '兔', reading: 'tou3' },
+      { text: '會', reading: 'wui6' },
+      { text: '》', reading: '.' },
+      { text: '。', reading: '' },
+    ],
+  },
 ];
 
 for (const { text, reading, expected } of testCases) {

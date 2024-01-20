@@ -39,7 +39,8 @@ function parseCantoneseReadings(rawText, readings) {
       (isTextHanzi && isReadingJyuutping) ||
       (isTextPunctuation && isReadingPunctuation) ||
       // Case where for example text is 'bu' and reading is 'bu4'
-      (isTextAlphanumeric && isReadingJyuutping)
+      (isTextAlphanumeric && isReadingJyuutping) ||
+      (!isTextAlphanumeric && !isTextHanzi && !isReadingJyuutping)
     ) {
       resultArray.push({ text, reading });
       textIndex++;
