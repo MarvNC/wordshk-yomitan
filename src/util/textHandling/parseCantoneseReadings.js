@@ -40,6 +40,7 @@ function parseCantoneseReadings(rawText, readings) {
       (isTextPunctuation && isReadingPunctuation) ||
       // Case where for example text is 'bu' and reading is 'bu4'
       (isTextAlphanumeric && isReadingJyuutping) ||
+      // Where both are special characters
       (!isTextAlphanumeric && !isTextHanzi && !isReadingJyuutping)
     ) {
       resultArray.push({ text, reading });
