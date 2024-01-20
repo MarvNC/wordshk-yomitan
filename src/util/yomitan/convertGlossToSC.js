@@ -1,5 +1,5 @@
-import { languages } from '../../constants';
-import { isStringSentence } from '../textHandling/textUtils';
+import { languages } from '../../constants.js';
+import { isStringSentence } from '../textHandling/textUtils.js';
 
 const examplePhraseText = '配詞 / 用法';
 const exampleSentenceText = '例句';
