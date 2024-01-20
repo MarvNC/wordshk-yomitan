@@ -54,3 +54,8 @@ type DictionaryEntry = {
   tags: Tag[];
   glosses: Gloss[];
 };
+
+type Reading = {
+  text: string;
+  reading: string;
+};
