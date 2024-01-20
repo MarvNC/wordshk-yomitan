@@ -1,5 +1,5 @@
 import { readCSVAsync } from './csvHandler.js';
-import { parseEntry } from './parseEntry.js';
+import { parseEntry } from './parseEntryToJson.js';
 
 async function parseCSVEntries(allCsvPath) {
   const data = await readCSVAsync(allCsvPath);

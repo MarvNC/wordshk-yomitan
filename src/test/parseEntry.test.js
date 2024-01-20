@@ -1,7 +1,7 @@
 import test from 'ava';
 import path from 'path';
 
-import { parseCSVEntries } from '../util/parseCsvEntries.js';
+import { parseCSVEntries } from '../util/csv/parseCsvEntriesToJson.js';
 
 const testCsvFile = 'src/test/testdata.csv';
 

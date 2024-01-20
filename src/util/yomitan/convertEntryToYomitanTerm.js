@@ -1,5 +1,5 @@
 import { TermEntry } from 'yomichan-dict-builder';
-import { languages } from '../constants';
+import { languages } from '../../constants';
 
 /**
  *

@@ -1,4 +1,4 @@
-import { languages } from '../constants.js';
+import { languages } from '../../constants.js';
 
 /**
  *
