@@ -1,6 +1,6 @@
 import { convertHeadwordsToSC } from './convertHeadwordsToSC.js';
 import { convertSenseToLiSC } from './convertSenseToSC.js';
-import { createEntryAttribution } from './createEntryAttrubution.js';
+import { createEntryAttribution } from './createEntryAttribution.js';
 
 /**
  * Converts a dictionary entry to a detailed definition.
