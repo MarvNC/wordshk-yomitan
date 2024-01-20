@@ -36,20 +36,23 @@ function parseCantoneseReadings(rawText, readings) {
     const isReadingPunctuation = isPunctuation(reading);
     // Ideal case
     if (
-      (isTextHanzi && isReadingJyuutping) ||
-      (isTextPunctuation && isReadingPunctuation) ||
-      // Case where for example text is 'bu' and reading is 'bu4'
-      (isTextAlphanumeric && isReadingJyuutping) ||
-      // Where both are special characters
-      (!isTextAlphanumeric && !isTextHanzi && !isReadingJyuutping)
+      !!text &&
+      !!reading &&
+      ((isTextHanzi && isReadingJyuutping) ||
+        (isTextPunctuation && isReadingPunctuation) ||
+        // Case where for example text is 'bu' and reading is 'bu4'
+        (isTextAlphanumeric && isReadingJyuutping) ||
+        // Where both are special characters
+        (!isTextAlphanumeric && !isTextHanzi && !isReadingJyuutping))
     ) {
       resultArray.push({ text, reading });
       textIndex++;
       readingIndex++;
     } else if (
-      (isTextPunctuation && isReadingJyuutping) ||
-      (!!text && reading === undefined) ||
-      (!isTextAlphanumeric && !isTextHanzi && isReadingJyuutping)
+      !!text &&
+      ((isTextPunctuation && isReadingJyuutping) ||
+        (!!text && reading === undefined) ||
+        (!isTextAlphanumeric && !isTextHanzi && isReadingJyuutping))
     ) {
       // Send empty string to reading
       resultArray.push({ text, reading: '' });

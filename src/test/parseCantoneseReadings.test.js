@@ -6,7 +6,8 @@ import { parseCantoneseReadings } from '../util/textHandling/parseCantoneseReadi
  * @typedef {Object} TestCase
  * @property {string} text
  * @property {string} reading
- * @property {TextReadingPair[]} expected
+ * @property {TextReadingPair[]} [expected]
+ * @property {boolean} [shouldThrow]
  */
 
 /**
@@ -193,11 +194,23 @@ const testCases = [
       { text: '。', reading: '' },
     ],
   },
+  {
+    text: 'Panda好pandai踢呢',
+    reading: 'pan3 daa1 hou2 baan3 naai1 tek3 le3',
+    shouldThrow: true,
+  },
 ];
 
-for (const { text, reading, expected } of testCases) {
-  test(`parseCantoneseReadings: ${text} ${reading}`, (t) => {
-    const result = parseCantoneseReadings(text, reading);
-    t.deepEqual(result, expected);
+for (const { text, reading, expected, shouldThrow } of testCases) {
+  test(`${
+    shouldThrow ? ' (should throw)' : ''
+  }parseCantoneseReadings: ${text} ${reading}`, (t) => {
+    if (shouldThrow) {
+      t.throws(() => parseCantoneseReadings(text, reading));
+      return;
+    } else {
+      const result = parseCantoneseReadings(text, reading);
+      t.deepEqual(result, expected);
+    }
   });
 }
