@@ -110,7 +110,7 @@ function convertExampleToSC(
           content: [
             exampleText,
             ...languageDatas.map((languageData) => {
-              return convertLanguageDataToUlSC(languageData, true);
+              return convertLanguageDataToUlSC(languageData, false);
             }),
           ],
         },
