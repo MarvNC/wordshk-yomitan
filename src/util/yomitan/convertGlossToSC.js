@@ -1,8 +1,8 @@
 import { languages } from '../../constants';
 import { isStringSentence } from '../textHandling/textUtils';
 
-const examplePhrase = '配詞 / 用法';
-const exampleSentence = '例句';
+const examplePhraseText = '配詞 / 用法';
+const exampleSentenceText = '例句';
 const examplePhraseEmoji = '💬';
 const exampleSentenceEmoji = '📝';
 
@@ -50,20 +50,46 @@ function convertGlossToSC(gloss) {
       {
         tag: 'div',
         data: {
-          wordshk: 'phrase',
+          wordshk: 'examples',
         },
-        content: phrases.map((phrase) => {
-          return convertLanguageDataToUlSC(phrase, true);
-        }),
-      },
-      {
-        tag: 'div',
-        data: {
-          wordshk: 'sentence',
-        },
-        content: sentences.map((sentence) => {
-          return convertLanguageDataToUlSC(sentence, false);
-        }),
+        content: [
+          {
+            tag: 'div',
+            data: {
+              wordshk: 'phrase',
+            },
+            content: [
+              {
+                tag: 'span',
+                content: examplePhraseText,
+                style: {
+                  listStyleType: `"${examplePhraseEmoji}"`,
+                },
+              },
+              ...phrases.map((phrase) => {
+                return convertLanguageDataToUlSC(phrase, true);
+              }),
+            ],
+          },
+          {
+            tag: 'div',
+            data: {
+              wordshk: 'sentence',
+            },
+            content: [
+              {
+                tag: 'span',
+                content: exampleSentenceText,
+                style: {
+                  listStyleType: `"${exampleSentenceEmoji}"`,
+                },
+              },
+              ...sentences.map((sentence) => {
+                return convertLanguageDataToUlSC(sentence, false);
+              }),
+            ],
+          },
+        ],
       },
     ],
   };
