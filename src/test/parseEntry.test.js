@@ -20,7 +20,7 @@ const expectedEntries = [
         value: '名詞',
       },
     ],
-    glosses: [
+    senses: [
       {
         explanation: {
           yue: ['D電池（量詞：粒）'],
@@ -44,7 +44,7 @@ const expectedEntries = [
         value: '名詞',
       },
     ],
-    glosses: [
+    senses: [
       {
         explanation: {
           yue: ['產生#電力 嘅大型#建築物（量詞：間／座）'],
@@ -68,7 +68,7 @@ const expectedEntries = [
         value: '動詞',
       },
     ],
-    glosses: [
+    senses: [
       {
         explanation: {
           yue: ['排走#污水'],
@@ -139,7 +139,7 @@ const expectedEntries = [
         value: '選擇',
       },
     ],
-    glosses: [
+    senses: [
       {
         explanation: {
           yue: ['根據你嘅取向，喺兩樣嘢或以上當中，抽取一樣'],
@@ -172,7 +172,7 @@ const expectedEntries = [
         value: '名詞',
       },
     ],
-    glosses: [
+    senses: [
       {
         explanation: {
           yue: ['喺舞台或者現實襯托主體嘅景物、佈景、環境'],
@@ -233,7 +233,7 @@ const expectedEntries = [
         value: '干支',
       },
     ],
-    glosses: [
+    senses: [
       {
         explanation: {
           yue: [
@@ -296,7 +296,7 @@ const expectedEntries = [
         value: '書面語',
       },
     ],
-    glosses: [
+    senses: [
       {
         explanation: {
           yue: ['表示動作、狀態進行緊、持續緊，類似「#住」、「#下」'],

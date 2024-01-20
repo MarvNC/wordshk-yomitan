@@ -1,5 +1,5 @@
 import { convertHeadwordsToSC } from './convertHeadwordsToSC.js';
-import { convertGlossToLiSC } from './convertGlossToSC.js';
+import { convertSenseToLiSC } from './convertSenseToSC.js';
 
 /**
  * Converts a dictionary entry to a detailed definition.
@@ -21,9 +21,9 @@ function convertEntryToDetailedDefinition(entry) {
         content: {
           tag: 'ol',
           data: {
-            wordshk: 'gloss-list',
+            wordshk: 'sense-list',
           },
-          content: entry.glosses.map(convertGlossToLiSC),
+          content: entry.senses.map(convertSenseToLiSC),
         },
       },
     ],

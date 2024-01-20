@@ -24,18 +24,18 @@ function parseEntry(entry) {
     });
 
   /**
-   * @type {Gloss[]}
+   * @type {Sense[]}
    */
-  const glosses = [];
+  const senses = [];
   for (const text of explanationsTexts) {
-    glosses.push(parseGloss(text));
+    senses.push(parseSense(text));
   }
 
   return {
     id,
     headwords,
     tags,
-    glosses,
+    senses,
   };
 }
 
@@ -87,11 +87,11 @@ function parseTags(entryLines) {
 }
 
 /**
- * Accepts a gloss entry string and returns the parsed gloss
+ * Accepts a sense entry string and returns the parsed sense
  * @param {string} entryText
- * @returns {Gloss}
+ * @returns {Sense}
  */
-function parseGloss(entryText) {
+function parseSense(entryText) {
   // Remove first line explanations
   entryText = entryText.replace('<explanation>\n', '');
   const [explanationText, ...examplesTexts] = entryText.split(/^<eg>$/gm);

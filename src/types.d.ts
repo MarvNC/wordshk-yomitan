@@ -39,7 +39,7 @@ type Tag = {
   value: string;
 };
 
-type Gloss = {
+type Sense = {
   explanation: LanguageData;
   egs: LanguageData[];
 };
@@ -52,5 +52,5 @@ type DictionaryEntry = {
   id: number;
   headwords: TextReadingPair[];
   tags: Tag[];
-  glosses: Gloss[];
+  senses: Sense[];
 };

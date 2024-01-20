@@ -7,11 +7,11 @@ const examplePhraseEmoji = '💬';
 const exampleSentenceEmoji = '📝';
 
 /**
- * Converts a gloss to structured content as a li.
- * @param {Gloss} gloss
+ * Converts a sense to structured content as a li.
+ * @param {Sense} sense
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
  */
-function convertGlossToLiSC(gloss) {
+function convertSenseToLiSC(sense) {
   /**
    * @type {LanguageData[]}
    */
@@ -20,7 +20,7 @@ function convertGlossToLiSC(gloss) {
    * @type {LanguageData[]}
    */
   const sentences = [];
-  for (const eg of gloss.egs) {
+  for (const eg of sense.egs) {
     // Check if any of the language datas are a sentence
     const isEgSentence = Object.values(eg).some((languageData) => {
       return languageData.some((languageText) => {
@@ -36,7 +36,7 @@ function convertGlossToLiSC(gloss) {
   return {
     tag: 'li',
     data: {
-      wordshk: 'gloss',
+      wordshk: 'sense',
     },
     content: [
       {
@@ -44,7 +44,7 @@ function convertGlossToLiSC(gloss) {
         data: {
           wordshk: 'definition',
         },
-        content: convertLanguageDataToUlSC(gloss.explanation, true),
+        content: convertLanguageDataToUlSC(sense.explanation, true),
       },
       {
         tag: 'div',
@@ -208,4 +208,4 @@ function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
   return languageLiScArray;
 }
 
-export { convertGlossToLiSC, convertLanguageDataToUlSC };
+export { convertSenseToLiSC, convertLanguageDataToUlSC };
