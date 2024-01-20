@@ -1,5 +1,6 @@
 import { convertHeadwordsToSC } from './convertHeadwordsToSC.js';
 import { convertSenseToLiSC } from './convertSenseToSC.js';
+import { createEntryAttribution } from './createEntryAttrubution.js';
 
 /**
  * Converts a dictionary entry to a detailed definition.
@@ -12,6 +13,7 @@ function convertEntryToDetailedDefinition(entry) {
     content: [
       // Headword
       convertHeadwordsToSC(entry.headwords),
+      // Senses with explanation/examples
       {
         tag: 'div',
         data: {
@@ -26,6 +28,8 @@ function convertEntryToDetailedDefinition(entry) {
           content: entry.senses.map(convertSenseToLiSC),
         },
       },
+      // Attribution
+      createEntryAttribution(entry),
     ],
   };
 }
