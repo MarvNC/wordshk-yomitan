@@ -21,8 +21,8 @@ function parseCantoneseReadings(rawText, readings) {
    */
   const resultArray = [];
 
-  const textArray = splitString(rawText, punctuations);
-  const readingsArray = splitString(readings, punctuations);
+  const textArray = splitString(rawText);
+  const readingsArray = splitString(readings);
 
   let readingIndex = 0;
   let textIndex = 0;
@@ -70,14 +70,26 @@ function parseCantoneseReadings(rawText, readings) {
 /**
  *
  * @param {string} input
- * @param {string[]} punctuations
  * @returns {string[]}
  */
-function splitString(input, punctuations) {
+function splitString(input) {
   const resultArray = [];
   let current = '';
   for (const char of input) {
     if (/[a-zA-Z0-9]/.test(char)) {
+      // Check if alphabetical or numeric
+      const isAlphabetical = /[a-zA-Z]/.test(char);
+      if (current.length > 0) {
+        // Check if previous character was alphabetical or numeric
+        const isPreviousAlphabetical = /[a-zA-Z]/.test(
+          current[current.length - 1]
+        );
+        if (isAlphabetical && !isPreviousAlphabetical) {
+          // Probably a case where the reading was typo'd like bit1ging1
+          resultArray.push(current);
+          current = '';
+        }
+      }
       current += char;
     } else if (punctuations[char]) {
       if (current) {

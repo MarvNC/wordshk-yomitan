@@ -1,3 +1,5 @@
+import XRegExp from '@gerhobbelt/xregexp';
+
 const punctuations = [
   '，',
   ',',
@@ -23,9 +25,10 @@ const punctuations = [
  * @returns {boolean}
  */
 function isHanzi(text) {
-  return /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/.test(
-    text
-  );
+  XRegExp.install('astral');
+  return XRegExp(
+    '\\p{InCJK_Unified_Ideographs}|\\p{InCJK_Unified_Ideographs_Extension_A}|\\p{InCJK_Unified_Ideographs_Extension_B}|\\p{InCJK_Unified_Ideographs_Extension_C}|\\p{InCJK_Unified_Ideographs_Extension_D}|\\p{InCJK_Unified_Ideographs_Extension_E}'
+  ).test(text);
 }
 
 /**

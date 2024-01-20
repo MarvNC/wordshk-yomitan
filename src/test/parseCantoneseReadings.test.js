@@ -138,6 +138,38 @@ const testCases = [
       { text: '溪', reading: 'kai1' },
     ],
   },
+  {
+    text: '呢個商場係好多居民返屋企嘅必經之路，有好有唔好囉。',
+    reading:
+      'nei1 go3 soeng1 coeng4 hai6 hou2 do1 geoi1 man4 faan1 uk1 kei2 ge3 bit1ging1 zi1 lou6, jau5 hou2 jau5 m4 hou2 lo1.',
+    expected: [
+      { text: '呢', reading: 'nei1' },
+      { text: '個', reading: 'go3' },
+      { text: '商', reading: 'soeng1' },
+      { text: '場', reading: 'coeng4' },
+      { text: '係', reading: 'hai6' },
+      { text: '好', reading: 'hou2' },
+      { text: '多', reading: 'do1' },
+      { text: '居', reading: 'geoi1' },
+      { text: '民', reading: 'man4' },
+      { text: '返', reading: 'faan1' },
+      { text: '屋', reading: 'uk1' },
+      { text: '企', reading: 'kei2' },
+      { text: '嘅', reading: 'ge3' },
+      { text: '必', reading: 'bit1' },
+      { text: '經', reading: 'ging1' },
+      { text: '之', reading: 'zi1' },
+      { text: '路', reading: 'lou6' },
+      { text: '，', reading: ',' },
+      { text: '有', reading: 'jau5' },
+      { text: '好', reading: 'hou2' },
+      { text: '有', reading: 'jau5' },
+      { text: '唔', reading: 'm4' },
+      { text: '好', reading: 'hou2' },
+      { text: '囉', reading: 'lo1' },
+      { text: '。', reading: '.' },
+    ],
+  },
 ];
 
 for (const { text, reading, expected } of testCases) {
