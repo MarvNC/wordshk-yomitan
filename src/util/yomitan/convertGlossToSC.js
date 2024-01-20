@@ -53,43 +53,58 @@ function convertGlossToSC(gloss) {
           wordshk: 'examples',
         },
         content: [
-          {
-            tag: 'div',
-            data: {
-              wordshk: 'phrase',
-            },
-            content: [
-              {
-                tag: 'span',
-                content: examplePhraseText,
-                style: {
-                  listStyleType: `"${examplePhraseEmoji}"`,
-                },
-              },
-              ...phrases.map((phrase) => {
-                return convertLanguageDataToUlSC(phrase, true);
-              }),
-            ],
-          },
-          {
-            tag: 'div',
-            data: {
-              wordshk: 'sentence',
-            },
-            content: [
-              {
-                tag: 'span',
-                content: exampleSentenceText,
-                style: {
-                  listStyleType: `"${exampleSentenceEmoji}"`,
-                },
-              },
-              ...sentences.map((sentence) => {
-                return convertLanguageDataToUlSC(sentence, false);
-              }),
-            ],
-          },
+          convertExampleToSC(
+            phrases,
+            'phrase',
+            examplePhraseText,
+            examplePhraseEmoji
+          ),
+          convertExampleToSC(
+            sentences,
+            'sentence',
+            exampleSentenceText,
+            exampleSentenceEmoji
+          ),
         ],
+      },
+    ],
+  };
+}
+
+/**
+ * Converts an example list to a ul structured content object with the appropriate emoji.
+ * @param {LanguageData[]} languageDatas
+ * @param {'phrase' | 'sentence'} exampleType
+ * @param {string} exampleText
+ * @param {string} exampleEmoji
+ * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+ */
+function convertExampleToSC(
+  languageDatas,
+  exampleType,
+  exampleText,
+  exampleEmoji
+) {
+  return {
+    tag: 'div',
+    data: {
+      wordshk: exampleType,
+    },
+    content: [
+      {
+        tag: 'ul',
+        content: {
+          tag: 'li',
+          content: [
+            exampleText,
+            ...languageDatas.map((languageData) => {
+              return convertLanguageDataToUlSC(languageData, true);
+            }),
+          ],
+        },
+        style: {
+          listStyleType: `"${exampleEmoji}"`,
+        },
       },
     ],
   };
