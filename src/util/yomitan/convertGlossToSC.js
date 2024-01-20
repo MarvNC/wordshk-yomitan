@@ -146,9 +146,6 @@ function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
    */
   const languageLiScArray = [];
   const languageInfo = languages[language];
-  /**
-   * @type {string[]}
-   */
   for (const languageText of languageTexts) {
     // Span tag for language text
     /**
