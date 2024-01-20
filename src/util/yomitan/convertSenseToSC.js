@@ -33,6 +33,32 @@ function convertSenseToLiSC(sense) {
       phrases.push(eg);
     }
   }
+
+  /**
+   * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
+   */
+  const exampleNodes = [];
+  if (phrases.length > 0) {
+    exampleNodes.push(
+      convertExampleToSC(
+        phrases,
+        'phrase',
+        examplePhraseText,
+        examplePhraseEmoji
+      )
+    );
+  }
+  if (sentences.length > 0) {
+    exampleNodes.push(
+      convertExampleToSC(
+        sentences,
+        'sentence',
+        exampleSentenceText,
+        exampleSentenceEmoji
+      )
+    );
+  }
+
   return {
     tag: 'li',
     data: {
@@ -51,20 +77,7 @@ function convertSenseToLiSC(sense) {
         data: {
           wordshk: 'examples',
         },
-        content: [
-          convertExampleToSC(
-            phrases,
-            'phrase',
-            examplePhraseText,
-            examplePhraseEmoji
-          ),
-          convertExampleToSC(
-            sentences,
-            'sentence',
-            exampleSentenceText,
-            exampleSentenceEmoji
-          ),
-        ],
+        content: exampleNodes,
       },
     ],
   };
