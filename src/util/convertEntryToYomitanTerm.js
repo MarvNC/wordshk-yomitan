@@ -29,27 +29,13 @@ function convertLanguageDataToSC(languageData, isExplanation) {
   const languageLiScArray = [];
 
   for (const language in languageData) {
-    const languageInfo = languages[language];
-    /**
-     * @type {string[]}
-     */
-    const languageTexts = languageData[language];
-    for (const languageText of languageTexts) {
-      languageLiScArray.push({
-        tag: 'li',
-        lang: languageInfo.langCode,
-        style: {
-          listStyleType: `"(${
-            isExplanation ? languageInfo.name : languageInfo.shortName
-          })"`,
-        },
-        // TODO: use textParser function when built
-        content: languageText,
-        data: {
-          wordshk: languageInfo.langCode,
-        },
-      });
-    }
+    languageLiScArray.push(
+      ...convertLanguageEntryToLi(
+        language,
+        languageData[language],
+        isExplanation
+      )
+    );
   }
 
   /**
@@ -64,4 +50,40 @@ function convertLanguageDataToSC(languageData, isExplanation) {
   };
 
   return sc;
+}
+
+/**
+ * Converts a single language entry to a li item
+ * @param {string} language
+ * @param {string[]} languageTexts
+ * @param {boolean} isExplanation
+ * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
+ */
+function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
+  /**
+   * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
+   */
+  const languageLiScArray = [];
+  const languageInfo = languages[language];
+  /**
+   * @type {string[]}
+   */
+  for (const languageText of languageTexts) {
+    languageLiScArray.push({
+      tag: 'li',
+      lang: languageInfo.langCode,
+      style: {
+        listStyleType: `"(${
+          isExplanation ? languageInfo.name : languageInfo.shortName
+        })"`,
+      },
+      // TODO: use textParser function when built
+      content: languageText,
+      data: {
+        wordshk: languageInfo.langCode,
+      },
+    });
+  }
+
+  return languageLiScArray;
 }
