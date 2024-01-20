@@ -1,3 +1,5 @@
+import { parseCantoneseReadings } from '../textHandling/parseCantoneseReadings.js';
+
 /**
  * Parses a text string into a structured content object.
  * @param {string} text
@@ -11,18 +13,27 @@ function convertTextToSC(text, language) {
   //  * @type {import("yomichan-dict-builder/dist/types/yomitan/termbank").StructuredContent}
   //  */
   // const sc = {
-
+  //   tag: 'ruby',
+  //   content: [],
   // };
   // return sc;
   return '';
 }
 
 /**
- * Parses a text string into a structured content object.
- * @param {string} text
+ * Parses a text string into a structured content object with ruby text for readings
+ * @param {Reading} reading
  * @returns {import("yomichan-dict-builder/dist/types/yomitan/termbank").StructuredContent}
  */
-function convertCantoneseStringToSC(text) {
-  // TODO
-  return '';
+function convertReadingToRubySC(reading) {
+  return {
+    tag: 'ruby',
+    content: [
+      reading.text,
+      {
+        tag: 'rt',
+        content: reading.reading,
+      },
+    ],
+  };
 }
