@@ -1,5 +1,5 @@
 /**
- * @type {Record<string, { name: string, shortName: string, langCode: string }>}
+ * @type {Record<Language, { name: string, shortName: string, langCode: string }>}
  */
 const languages = {
   yue: {
