@@ -7,11 +7,11 @@ const examplePhraseEmoji = '💬';
 const exampleSentenceEmoji = '📝';
 
 /**
- * Converts a gloss to structured content.
+ * Converts a gloss to structured content as a li.
  * @param {Gloss} gloss
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
  */
-function convertGlossToSC(gloss) {
+function convertGlossToLiSC(gloss) {
   /**
    * @type {LanguageData[]}
    */
@@ -208,4 +208,4 @@ function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
   return languageLiScArray;
 }
 
-export { convertGlossToSC, convertLanguageDataToUlSC };
+export { convertGlossToLiSC, convertLanguageDataToUlSC };

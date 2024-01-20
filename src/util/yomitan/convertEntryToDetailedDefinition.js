@@ -1,5 +1,5 @@
 import { convertHeadwordsToSC } from './convertHeadwordsToSC.js';
-import { convertGlossToSC } from './convertGlossToSC.js';
+import { convertGlossToLiSC } from './convertGlossToSC.js';
 
 /**
  * Converts a dictionary entry to a detailed definition.
@@ -23,7 +23,7 @@ function convertEntryToDetailedDefinition(entry) {
           data: {
             wordshk: 'gloss-list',
           },
-          content: entry.glosses.map(convertGlossToSC),
+          content: entry.glosses.map(convertGlossToLiSC),
         },
       },
     ],
