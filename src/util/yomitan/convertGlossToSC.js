@@ -34,11 +34,10 @@ function convertGlossToSC(gloss) {
     }
   }
   return {
-    tag: 'ul',
+    tag: 'li',
     data: {
       wordshk: 'gloss',
     },
-    lang: 'yue',
     content: [
       {
         tag: 'div',
