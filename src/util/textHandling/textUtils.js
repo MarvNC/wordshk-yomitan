@@ -45,4 +45,10 @@ function isPunctuation(text) {
   return punctuations.includes(text);
 }
 
-export { punctuations, isHanzi, isJyuutping, isPunctuation };
+function isStringSentence(text) {
+  // Check if text ends with a punctuation
+  const lastChar = text[text.length - 1];
+  return isPunctuation(lastChar);
+}
+
+export { punctuations, isHanzi, isJyuutping, isPunctuation, isStringSentence };
