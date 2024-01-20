@@ -69,9 +69,9 @@ function convertSenseToLiSC(sense) {
       {
         tag: 'div',
         data: {
-          wordshk: 'definition',
+          wordshk: 'explanation',
         },
-        content: convertLanguageDataToUlSC(sense.explanation, true),
+        content: convertLanguageDataToUlSC(sense.explanation, false),
       },
       {
         tag: 'div',
