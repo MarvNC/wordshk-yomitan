@@ -103,6 +103,31 @@ const testCases = [
       { text: '。', reading: '' },
     ],
   },
+  {
+    text: '「乜乜M」嗰啲巴士，一定經地鐵站㗎。',
+    reading:
+      'mat1 mat1 em1 go2 di1 baa1 si2, jat1 ding6 ging1 dei6 tit3 zaam6 gaa3.',
+    expected: [
+      { text: '「', reading: '' },
+      { text: '乜', reading: 'mat1' },
+      { text: '乜', reading: 'mat1' },
+      { text: 'M', reading: 'em1' },
+      { text: '」', reading: '' },
+      { text: '嗰', reading: 'go2' },
+      { text: '啲', reading: 'di1' },
+      { text: '巴', reading: 'baa1' },
+      { text: '士', reading: 'si2' },
+      { text: '，', reading: ',' },
+      { text: '一', reading: 'jat1' },
+      { text: '定', reading: 'ding6' },
+      { text: '經', reading: 'ging1' },
+      { text: '地', reading: 'dei6' },
+      { text: '鐵', reading: 'tit3' },
+      { text: '站', reading: 'zaam6' },
+      { text: '㗎', reading: 'gaa3' },
+      { text: '。', reading: '.' },
+    ],
+  },
 ];
 
 for (const { text, reading, expected } of testCases) {

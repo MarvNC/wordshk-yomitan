@@ -30,22 +30,24 @@ function parseCantoneseReadings(rawText, readings) {
     const text = textArray[textIndex];
     const reading = readingsArray[readingIndex];
     const isTextHanzi = isHanzi(text);
-    const isReadingJyuutping = isJyuutping(reading);
+    const isTextAlphanumeric = isJyuutping(text);
     const isTextPunctuation = isPunctuation(text);
+    const isReadingJyuutping = isJyuutping(reading);
     const isReadingPunctuation = isPunctuation(reading);
     // Ideal case
     if (
       (isTextHanzi && isReadingJyuutping) ||
       (isTextPunctuation && isReadingPunctuation) ||
       // Case where for example text is 'bu' and reading is 'bu4'
-      (!isTextHanzi && !isTextPunctuation && isReadingJyuutping)
+      (isTextAlphanumeric && isReadingJyuutping)
     ) {
       resultArray.push({ text, reading });
       textIndex++;
       readingIndex++;
     } else if (
       (isTextPunctuation && isReadingJyuutping) ||
-      (!!text && reading === undefined)
+      (!!text && reading === undefined) ||
+      (!isTextAlphanumeric && !isTextHanzi && isReadingJyuutping)
     ) {
       // Send empty string to reading
       resultArray.push({ text, reading: '' });
