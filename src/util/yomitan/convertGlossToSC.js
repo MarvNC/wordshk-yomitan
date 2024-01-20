@@ -153,9 +153,12 @@ function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
           data: {
             wordshk: 'lang',
           },
+          style: {
+            color: '#666',
+          },
           content: `<${
             isExplanation ? languageInfo.name : languageInfo.shortName
-          }>`,
+          }> `,
         },
         textSpan,
       ],
