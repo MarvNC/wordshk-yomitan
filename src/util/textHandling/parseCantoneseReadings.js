@@ -1,3 +1,10 @@
+import {
+  punctuations,
+  isHanzi,
+  isJyuutping,
+  isPunctuation,
+} from './textUtils.js';
+
 /**
  * Parses a text string into an array matching each character to the readings
  * @example text: "你get唔get到我講咩？"
@@ -13,37 +20,41 @@ function parseCantoneseReadings(text, readings) {
    * @type {{text: string, reading: string}[]}
    */
   const resultArray = [];
-  let textIndex = 0;
-  let readingIndex = 0;
-  const punctuations = [
-    '，',
-    ',',
-    '。',
-    '.',
-    '？',
-    '?',
-    '！',
-    '!',
-    '；',
-    ';',
-    '：',
-    ':',
-    '、',
-    ',',
-  ];
 
   const textArray = splitString(text, punctuations);
   const readingsArray = splitString(readings, punctuations);
-  if (textArray.length !== readingsArray.length) {
-    throw new Error('Text and readings do not match');
+
+  let readingIndex = 0;
+  let textIndex = 0;
+  for (let i = 0; i < Math.max(textArray.length, readingsArray.length); i++) {
+    const text = textArray[textIndex];
+    const reading = readingsArray[readingIndex];
+    const isTextHanzi = isHanzi(text);
+    const isReadingJyuutping = isJyuutping(reading);
+    const isTextPunctuation = isPunctuation(text);
+    const isReadingPunctuation = isPunctuation(reading);
+    // Ideal case
+    if (
+      (isTextHanzi && isReadingJyuutping) ||
+      (isTextPunctuation && isReadingPunctuation) ||
+      // Case where for example text is 'bu' and reading is 'bu4'
+      (!isTextHanzi && !isTextPunctuation && isReadingJyuutping)
+    ) {
+      resultArray.push({ text, reading });
+      textIndex++;
+      readingIndex++;
+    } else if (isTextPunctuation && isReadingJyuutping) {
+      // Send empty string to reading
+      resultArray.push({ text, reading: '' });
+      textIndex++;
+    } else {
+      throw new Error(
+        `Unexpected text "${text}" and reading "${reading}" at index ${i}`
+      );
+    }
   }
-  return textArray.map((text, index) => {
-    const reading = readingsArray[index];
-    return {
-      text,
-      reading,
-    };
-  });
+
+  return resultArray;
 }
 
 /**
