@@ -141,7 +141,8 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
       ...convertLanguageEntryToDiv(
         // @ts-ignore
         language,
-        languageData[language]
+        languageData[language],
+        isExplanation
       )
     );
   }
@@ -169,9 +170,10 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
  * Converts a single language entry to a li item
  * @param {Language} language
  * @param {string[]} languageTexts
+ * @param {boolean} isExplanation whether the languageData is an explanation
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
  */
-function convertLanguageEntryToDiv(language, languageTexts) {
+function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
@@ -188,12 +190,14 @@ function convertLanguageEntryToDiv(language, languageTexts) {
       },
       content: convertTextToSC(languageText, language),
     };
-    // Change text size for selected languages
-    const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-    const isCJK = cjkLangs.includes(language);
-    textContentSpan.style = {
-      fontSize: isCJK ? '120%' : '80%',
-    };
+    if (!isExplanation) {
+      // Change text size for selected languages
+      const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
+      const isCJK = cjkLangs.includes(language);
+      textContentSpan.style = {
+        fontSize: isCJK ? '120%' : '75%',
+      };
+    }
 
     /**
      * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
