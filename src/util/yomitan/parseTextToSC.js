@@ -8,10 +8,10 @@ import { parseCantoneseReadings } from '../textHandling/parseCantoneseReadings.j
  */
 function convertTextToSC(rawText, languageCode) {
   const rubyTextLangs = ['yue', 'zho', 'lzh'];
-  const cleanedText = cleanRawText(rawText);
   if (!rubyTextLangs.includes(languageCode)) {
-    return cleanedText;
+    return rawText;
   }
+  const cleanedText = cleanRawText(rawText);
   // Parse brackets for possible reading
   const bracketRegex = /(.+)\(([^\(\)]+)\)$/;
   const [_, phrase, reading] = cleanedText.match(bracketRegex) || [];
