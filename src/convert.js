@@ -4,6 +4,7 @@ import path from 'path';
 import { getCSVInfo } from './util/csv/csvHandler.js';
 import { parseCSVEntries } from './util/csv/parseCsvEntriesToJson.js';
 import { convertEntryToYomitanTerms } from './util/yomitan/convertEntryToYomitanTerm.js';
+import { findAllLabels } from './util/entryParse/parseLabels.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
@@ -13,6 +14,8 @@ const exportDirectory = './dist';
   const allCsvPath = path.join(dataFolder, allCsv);
   const dictionaryEntries = await parseCSVEntries(allCsvPath);
   console.log(`Found ${dictionaryEntries.length} entries.`);
+
+  const uniqueLabels = findAllLabels(dictionaryEntries);
 
   const dictionary = new Dictionary({
     fileName: `Words.hk ${dateString}.zip`,
