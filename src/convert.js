@@ -30,7 +30,7 @@ const exportDirectory = './dist';
       This export contains ${dictionaryEntries.length} entries.
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
-    .setTitle(`Words.hk 粵典 [${dateString}]`)
+    .setTitle(`Words.hk 粵典 [${dateString}] test 2`)
     .setRevision(`wordshk-${dateString}`);
   await dictionary.setIndex(dictionaryIndex.build());
 

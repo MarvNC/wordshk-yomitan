@@ -138,7 +138,7 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
 
   for (const language of Object.keys(languageData)) {
     languageDivArray.push(
-      ...convertLanguageEntryToDiv(
+      ...convertLanguageEntryToListItems(
         // @ts-ignore
         language,
         languageData[language],
@@ -167,13 +167,17 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
 }
 
 /**
- * Converts a single language entry to a li item
+ * Converts a single language entry consisting of multiple language contents to a list of lis
  * @param {Language} language
  * @param {string[]} languageTexts
  * @param {boolean} isExplanation whether the languageData is an explanation
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
  */
-function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
+function convertLanguageEntryToListItems(
+  language,
+  languageTexts,
+  isExplanation
+) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
@@ -181,28 +185,9 @@ function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
   const languageInfo = languages[language];
   for (const languageText of languageTexts) {
     /**
-     * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
-     */
-    const textContentSpan = {
-      tag: 'span',
-      data: {
-        wordshk: 'langtext',
-      },
-      content: convertTextToSC(languageText, language),
-    };
-    if (!isExplanation) {
-      // Change text size for selected languages
-      const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-      const isCJK = cjkLangs.includes(language);
-      textContentSpan.style = {
-        fontSize: isCJK ? '120%' : '75%',
-      };
-    }
-
-    /**
      * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
      */
-    const liChildren = [textContentSpan];
+    const liChildren = [convertTextToSC(languageText, language)];
 
     // Only push lang tag if non yue/eng language
     const noLanguageTagNecessaryLanguages = ['yue', 'eng'];
@@ -214,19 +199,36 @@ function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
         },
         style: {
           color: '#888',
+          fontSize: '0.8em',
         },
         content: `${languageInfo.name}› `,
       });
     }
 
-    languageLiScArray.push({
-      tag: 'div',
+    /**
+     * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+     */
+    const singleLanguageLi = {
+      tag: 'li',
       lang: languageInfo.langCode,
       content: liChildren,
+      style: {
+        listStyleType: 'none',
+      },
       data: {
         wordshk: languageInfo.langCode,
       },
-    });
+    };
+
+    // Change text size for selected languages
+    if (!isExplanation) {
+      const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
+      const isCJK = cjkLangs.includes(language);
+      // @ts-ignore
+      singleLanguageLi.style.fontSize = isCJK ? '1.2em' : '0.75em';
+    }
+
+    languageLiScArray.push(singleLanguageLi);
   }
 
   return languageLiScArray;
