@@ -25,6 +25,9 @@ function convertHeadwordsToSC(headwords) {
     data: {
       wordshk: 'headword',
     },
+    style: {
+      fontSize: '1.2em',
+    },
     lang: 'yue',
     content: ['【', ...headwordsSCListWithSeparator, '】'],
   };
