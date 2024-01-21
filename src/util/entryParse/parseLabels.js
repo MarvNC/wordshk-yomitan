@@ -15,7 +15,6 @@ function findLabelValues(dictionaryEntries) {
       }
     }
   }
-  console.log(tagCategories);
   return tagCategories;
 }
 
