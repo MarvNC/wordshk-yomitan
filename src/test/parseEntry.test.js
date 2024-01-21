@@ -371,6 +371,43 @@ const expectedEntries = [
       },
     ],
   },
+  {
+    id: 93305,
+    headwords: [
+      {
+        text: '揸正嚟做',
+        readings: ['zaa1 zeng3 lai4 zou6', 'zaa1 zeng3 lei4 zou6'],
+      },
+    ],
+    tags: [
+      {
+        name: 'pos',
+        value: '動詞',
+      },
+      {
+        name: 'sim',
+        value: '揸正',
+      },
+    ],
+    senses: [
+      {
+        explanation: {
+          yue: ['嚴格依照規矩，不留餘地，冇人情講'],
+          eng: [
+            'to follow the rules strictly; to "go by the book"; to leave no room for discretion',
+          ],
+        },
+        egs: [
+          {
+            yue: [
+              '唔好怪我揸正嚟做。 (m4 hou2 gwaai3 ngo5 zaa1 zeng3 lei4 zou6.)',
+            ],
+            eng: ["Don't blame me for following the rules too strictly."],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /**
