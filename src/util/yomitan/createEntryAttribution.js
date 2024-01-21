@@ -13,6 +13,8 @@ function createEntryAttribution(entry) {
     style: {
       fontSize: '0.7em',
       textAlign: 'right',
+      // The examples/definitions above have marginBottom set
+      marginTop: '-0.4em',
     },
     content: [
       {
