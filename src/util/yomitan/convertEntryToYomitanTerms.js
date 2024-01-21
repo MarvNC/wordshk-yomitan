@@ -3,26 +3,45 @@ import { convertEntryToDetailedDefinition } from './convertEntryToDetailedDefini
 
 /**
  *
- * @param {DictionaryEntry} entry
+ * @param {DictionaryEntry} dictionaryEntry
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').TermInformation[]}
  */
-function convertEntryToYomitanTerms(entry) {
+function convertEntryToYomitanTerms(dictionaryEntry) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').TermInformation[]}
    */
   const yomitanTerms = [];
 
-  const detailedDefinition = convertEntryToDetailedDefinition(entry);
-  for (const headword of entry.headwords) {
+  const detailedDefinition = convertEntryToDetailedDefinition(dictionaryEntry);
+  for (const headword of dictionaryEntry.headwords) {
     for (const reading of headword.readings) {
-      const termEntry = new TermEntry(headword.text)
+      const yomitanTermEntry = new TermEntry(headword.text)
         .setReading(reading)
         .addDetailedDefinition(detailedDefinition);
-      yomitanTerms.push(termEntry.build());
+      addTagsToTermEntry(dictionaryEntry, yomitanTermEntry);
+      yomitanTerms.push(yomitanTermEntry.build());
     }
   }
 
   return yomitanTerms;
+}
+
+/**
+ * @param {DictionaryEntry} dictionaryEntry
+ * @param {TermEntry} termEntry
+ */
+function addTagsToTermEntry(dictionaryEntry, termEntry) {
+  const termTags = [];
+  const entryTags = [];
+  for (const tag of dictionaryEntry.tags) {
+    if (tag.name === 'pos') {
+      entryTags.push(tag.value);
+    } else if (tag.name === 'label') {
+      termTags.push(tag.value);
+    }
+  }
+  termEntry.setTermTags(termTags.join(' '));
+  termEntry.setDefinitionTags(entryTags.join(' '));
 }
 
 export { convertEntryToYomitanTerms };
