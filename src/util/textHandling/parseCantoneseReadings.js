@@ -32,31 +32,39 @@ function parseCantoneseReadings(rawText, readings) {
     const isTextHanzi = isHanzi(text);
     const isTextAlphanumeric = isJyuutping(text);
     const isTextPunctuation = isPunctuation(text);
-    const isReadingJyuutping = isJyuutping(reading);
+    const isReadingJyutping = isJyuutping(reading);
     const isReadingPunctuation = isPunctuation(reading);
     // Ideal case
     if (
       !!text &&
       !!reading &&
-      ((isTextHanzi && isReadingJyuutping) ||
-        (isTextPunctuation && isReadingPunctuation) ||
+      ((isTextHanzi && isReadingJyutping) ||
         // Case where for example text is 'bu' and reading is 'bu4'
-        (isTextAlphanumeric && isReadingJyuutping) ||
-        // Where both are special characters
-        (!isTextAlphanumeric && !isTextHanzi && !isReadingJyuutping))
+        (isTextAlphanumeric && isReadingJyutping))
     ) {
       resultArray.push({ text, reading });
       textIndex++;
       readingIndex++;
     } else if (
       !!text &&
-      ((isTextPunctuation && isReadingJyuutping) ||
+      ((isTextPunctuation && isReadingJyutping) ||
         (!!text && reading === undefined) ||
-        (!isTextAlphanumeric && !isTextHanzi && isReadingJyuutping))
+        (!isTextAlphanumeric && !isTextHanzi && isReadingJyutping))
     ) {
       // Send empty string to reading
       resultArray.push({ text, reading: '' });
       textIndex++;
+    } else if (
+      !!text &&
+      !!reading &&
+      ((isTextPunctuation && isReadingPunctuation) ||
+        // Where both are special characters
+        (!isTextAlphanumeric && !isTextHanzi && !isReadingJyutping))
+    ) {
+      // Don't add the punctuation but consume it
+      resultArray.push({ text, reading: '' });
+      textIndex++;
+      readingIndex++;
     } else {
       throw new Error(
         `Unexpected text "${text}" and reading "${reading}" at index ${i} in ${rawText}: ${readings}`
