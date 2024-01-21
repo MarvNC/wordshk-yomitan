@@ -195,7 +195,7 @@ function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
       const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
       const isCJK = cjkLangs.includes(language);
       textContentSpan.style = {
-        fontSize: isCJK ? '110%' : '90%',
+        fontSize: isCJK ? '120%' : '80%',
       };
     }
 
