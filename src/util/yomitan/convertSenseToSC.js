@@ -71,7 +71,7 @@ function convertSenseToLiSC(sense) {
         data: {
           wordshk: 'explanation',
         },
-        content: convertLanguageDataToUlSC(sense.explanation, false),
+        content: convertLanguageDataToLiSC(sense.explanation, true),
       },
       {
         tag: 'div',
@@ -98,29 +98,29 @@ function convertExampleToSC(
   exampleText,
   exampleEmoji
 ) {
-  return {
-    tag: 'div',
-    data: {
-      wordshk: exampleType,
-    },
-    content: [
-      {
-        tag: 'ul',
-        content: {
-          tag: 'li',
-          content: [
-            exampleText,
-            ...languageDatas.map((languageData) => {
-              return convertLanguageDataToUlSC(languageData, false);
-            }),
-          ],
-        },
-        style: {
-          listStyleType: `"${exampleEmoji}"`,
-        },
+  return [
+    {
+      tag: 'li',
+      style: {
+        listStyleType: `"${exampleEmoji}"`,
       },
-    ],
-  };
+      data: {
+        wordshk: 'example-type-header',
+      },
+      content: exampleText,
+    },
+    {
+      tag: 'ul',
+      data: {
+        wordshk: exampleType,
+      },
+      content: [
+        ...languageDatas.map((languageData) => {
+          return convertLanguageDataToLiSC(languageData, false);
+        }),
+      ],
+    },
+  ];
 }
 
 /**
@@ -130,19 +130,18 @@ function convertExampleToSC(
  or an example
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
  */
-function convertLanguageDataToUlSC(languageData, isExplanation) {
+function convertLanguageDataToLiSC(languageData, isExplanation) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
-  const languageLiScArray = [];
+  const languageDivArray = [];
 
   for (const language of Object.keys(languageData)) {
-    languageLiScArray.push(
-      ...convertLanguageEntryToLi(
+    languageDivArray.push(
+      ...convertLanguageEntryToDiv(
         // @ts-ignore
         language,
-        languageData[language],
-        isExplanation
+        languageData[language]
       )
     );
   }
@@ -151,11 +150,16 @@ function convertLanguageDataToUlSC(languageData, isExplanation) {
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
    */
   const sc = {
-    tag: 'ul',
+    tag: 'li',
+    style: {
+      marginTop: '0.2em',
+      marginBottom: '0.5em',
+      listStyleType: isExplanation ? 'none' : 'circle',
+    },
     data: {
       wordshk: isExplanation ? 'explanation' : 'example',
     },
-    content: languageLiScArray,
+    content: languageDivArray,
   };
 
   return sc;
@@ -165,55 +169,56 @@ function convertLanguageDataToUlSC(languageData, isExplanation) {
  * Converts a single language entry to a li item
  * @param {Language} language
  * @param {string[]} languageTexts
- * @param {boolean} isExplanation
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
  */
-function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
+function convertLanguageEntryToDiv(language, languageTexts) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
   const languageLiScArray = [];
   const languageInfo = languages[language];
   for (const languageText of languageTexts) {
-    // Span tag for language text
     /**
      * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
      */
-    const textSpan = {
+    const textContentSpan = {
       tag: 'span',
       data: {
         wordshk: 'langtext',
       },
       content: convertTextToSC(languageText, languageInfo.langCode),
     };
-    if (!isExplanation) {
-      // Change text size for selected languages
-      const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-      const makeSmaller = ['eng'];
-      const isCJK = cjkLangs.includes(language);
-      textSpan.style = {
-        fontSize: isCJK ? '120%' : '80%',
-      };
-    }
-    languageLiScArray.push({
-      tag: 'li',
-      lang: languageInfo.langCode,
-      content: [
-        // Span tag for language name/abbreviation
-        {
-          tag: 'span',
-          data: {
-            wordshk: 'lang',
-          },
-          style: {
-            color: '#666',
-          },
-          content: `<${
-            isExplanation ? languageInfo.name : languageInfo.shortName
-          }> `,
+    // Change text size for selected languages
+    const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
+    const isCJK = cjkLangs.includes(language);
+    textContentSpan.style = {
+      fontSize: isCJK ? '120%' : '80%',
+    };
+
+    /**
+     * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
+     */
+    const liChildren = [textContentSpan];
+
+    // Only push lang tag if non yue/eng language
+    const noLanguageTagNecessaryLanguages = ['yue', 'eng'];
+    if (!noLanguageTagNecessaryLanguages.includes(language)) {
+      liChildren.unshift({
+        tag: 'span',
+        data: {
+          wordshk: 'langSignifier',
         },
-        textSpan,
-      ],
+        style: {
+          color: '#888',
+        },
+        content: `${languageInfo.name}› `,
+      });
+    }
+
+    languageLiScArray.push({
+      tag: 'div',
+      lang: languageInfo.langCode,
+      content: liChildren,
       data: {
         wordshk: languageInfo.langCode,
       },
@@ -223,4 +228,4 @@ function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
   return languageLiScArray;
 }
 
-export { convertSenseToLiSC, convertLanguageDataToUlSC };
+export { convertSenseToLiSC };
