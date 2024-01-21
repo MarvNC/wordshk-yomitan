@@ -98,33 +98,29 @@ function convertExampleToSC(
   exampleText,
   exampleEmoji
 ) {
-  return {
-    tag: 'div',
-    data: {
-      wordshk: exampleType,
-    },
-    content: [
-      {
-        tag: 'ul',
-        content: [
-          {
-            tag: 'li',
-            style: {
-              listStyleType: `"${exampleEmoji}"`,
-              fontSize: '0.8em',
-            },
-            data: {
-              wordshk: 'example-type-header',
-            },
-            content: exampleText,
-          },
-          ...languageDatas.map((languageData) => {
-            return convertLanguageDataToLiSC(languageData, false);
-          }),
-        ],
+  return [
+    {
+      tag: 'li',
+      style: {
+        listStyleType: `"${exampleEmoji}"`,
       },
-    ],
-  };
+      data: {
+        wordshk: 'example-type-header',
+      },
+      content: exampleText,
+    },
+    {
+      tag: 'ul',
+      data: {
+        wordshk: exampleType,
+      },
+      content: [
+        ...languageDatas.map((languageData) => {
+          return convertLanguageDataToLiSC(languageData, false);
+        }),
+      ],
+    },
+  ];
 }
 
 /**
@@ -157,8 +153,8 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
   const sc = {
     tag: 'li',
     style: {
-      marginTop: '0.5em',
-      marginBottom: '0.2em',
+      marginTop: '0.2em',
+      marginBottom: '0.5em',
       listStyleType: isExplanation ? 'none' : 'circle',
     },
     data: {
@@ -197,7 +193,6 @@ function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
     if (!isExplanation) {
       // Change text size for selected languages
       const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-      const makeSmaller = ['eng'];
       const isCJK = cjkLangs.includes(language);
       textContentSpan.style = {
         fontSize: isCJK ? '110%' : '90%',
