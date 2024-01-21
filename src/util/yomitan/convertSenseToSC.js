@@ -1,5 +1,6 @@
 import { languages } from '../../constants.js';
 import { isStringSentence } from '../textHandling/textUtils.js';
+import { convertTextToSC } from './parseTextToSC.js';
 
 const examplePhraseText = '配詞 / 用法';
 const exampleSentenceText = '例句';
@@ -68,9 +69,9 @@ function convertSenseToLiSC(sense) {
       {
         tag: 'div',
         data: {
-          wordshk: 'definition',
+          wordshk: 'explanation',
         },
-        content: convertLanguageDataToUlSC(sense.explanation, true),
+        content: convertLanguageDataToUlSC(sense.explanation, false),
       },
       {
         tag: 'div',
@@ -110,7 +111,7 @@ function convertExampleToSC(
           content: [
             exampleText,
             ...languageDatas.map((languageData) => {
-              return convertLanguageDataToUlSC(languageData, true);
+              return convertLanguageDataToUlSC(languageData, false);
             }),
           ],
         },
@@ -183,14 +184,15 @@ function convertLanguageEntryToLi(language, languageTexts, isExplanation) {
       data: {
         wordshk: 'langtext',
       },
-      // TODO: use textParser function when built
-      content: languageText,
+      content: convertTextToSC(languageText, languageInfo.langCode),
     };
-    // Make text larger for selected languages
-    const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-    if (cjkLangs.includes(language) && !isExplanation) {
+    if (!isExplanation) {
+      // Change text size for selected languages
+      const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
+      const makeSmaller = ['eng'];
+      const isCJK = cjkLangs.includes(language);
       textSpan.style = {
-        fontSize: '120%',
+        fontSize: isCJK ? '120%' : '80%',
       };
     }
     languageLiScArray.push({
