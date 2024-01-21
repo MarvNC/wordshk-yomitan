@@ -60,6 +60,7 @@ const categoryToSortingOrder = {
  */
 async function addYomitanTags(dictionary, uniqueLabels) {
   let tagsAdded = 0;
+  const noNoteAvailable = new Set();
   for (const [labelName, labelValues] of Object.entries(uniqueLabels)) {
     for (const value of labelValues) {
       await dictionary.addTag({
@@ -68,10 +69,16 @@ async function addYomitanTags(dictionary, uniqueLabels) {
         notes: tagValueToNote[value] ?? value,
         sortingOrder: categoryToSortingOrder[labelName] ?? 0,
       });
+      if (!tagValueToNote[value]) {
+        noNoteAvailable.add(value);
+      }
       tagsAdded++;
     }
   }
   console.log(`Added ${tagsAdded} tags to dictionary.`);
+  if (noNoteAvailable.size) {
+    console.warn(`No note available for: ${[...noNoteAvailable].join(', ')}`);
+  }
 }
 
 export { addYomitanTags };
