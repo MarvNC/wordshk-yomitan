@@ -46,7 +46,7 @@ const tagValueToNote = {
 };
 
 const categoryToYomitanLabelCategoryMap = {
-  pos: 'part-of-speech',
+  pos: 'partOfSpeech',
 };
 
 const categoryToSortingOrder = {
@@ -65,8 +65,10 @@ async function addYomitanTags(dictionary, uniqueLabels) {
     for (const value of labelValues) {
       await dictionary.addTag({
         name: value,
-        category: categoryToYomitanLabelCategoryMap[labelName] ?? labelName,
-        notes: tagValueToNote[value] ?? value,
+        category:
+          categoryToYomitanLabelCategoryMap[labelName] ??
+          labelName,
+        notes: `${value} | ${tagValueToNote[value]}` ?? value,
         sortingOrder: categoryToSortingOrder[labelName] ?? 0,
       });
       if (!tagValueToNote[value]) {
