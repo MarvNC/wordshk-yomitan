@@ -11,7 +11,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '大電',
-        reading: 'daai6 din6',
+        readings: ['daai6 din6'],
       },
     ],
     tags: [
@@ -35,7 +35,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '發電廠',
-        reading: 'faat3 din6 cong2',
+        readings: ['faat3 din6 cong2'],
       },
     ],
     tags: [
@@ -59,7 +59,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '排污',
-        reading: 'paai4 wu1',
+        readings: ['paai4 wu1'],
       },
     ],
     tags: [
@@ -114,7 +114,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '揀選',
-        reading: 'gaan2 syun2',
+        readings: ['gaan2 syun2'],
       },
     ],
     tags: [
@@ -163,7 +163,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '背景',
-        reading: 'bui3 ging2',
+        readings: ['bui3 ging2'],
       },
     ],
     tags: [
@@ -220,7 +220,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '天干地支',
-        reading: 'tin1 gon1 dei6 zi1',
+        readings: ['tin1 gon1 dei6 zi1'],
       },
     ],
     tags: [
@@ -279,11 +279,11 @@ const expectedEntries = [
     headwords: [
       {
         text: '着',
-        reading: 'zoek6',
+        readings: ['zoek6'],
       },
       {
         text: '著',
-        reading: 'zoek6',
+        readings: ['zoek6'],
       },
     ],
     tags: [

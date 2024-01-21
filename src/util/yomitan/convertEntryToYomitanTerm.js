@@ -14,10 +14,12 @@ function convertEntryToYomitanTerms(entry) {
 
   const detailedDefinition = convertEntryToDetailedDefinition(entry);
   for (const headword of entry.headwords) {
-    const termEntry = new TermEntry(headword.text)
-      .setReading(headword.reading)
-      .addDetailedDefinition(detailedDefinition);
-    yomitanTerms.push(termEntry.build());
+    for (const reading of headword.readings) {
+      const termEntry = new TermEntry(headword.text)
+        .setReading(reading)
+        .addDetailedDefinition(detailedDefinition);
+      yomitanTerms.push(termEntry.build());
+    }
   }
 
   return yomitanTerms;
