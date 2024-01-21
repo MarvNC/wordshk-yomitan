@@ -46,13 +46,13 @@ function parseEntry(entry) {
  */
 function parseHeadwords(headwordString) {
   return headwordString.split(',').map((headword) => {
-    const [text, reading] = headword.split(':');
-    if (!text || !reading) {
+    const [text, ...readings] = headword.split(':');
+    if (!text || !readings) {
       throw new Error(`Invalid headword: ${headword}`);
     }
     return {
       text,
-      reading,
+      readings,
     };
   });
 }

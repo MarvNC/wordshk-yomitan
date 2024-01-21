@@ -11,7 +11,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '大電',
-        reading: 'daai6 din6',
+        readings: ['daai6 din6'],
       },
     ],
     tags: [
@@ -35,7 +35,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '發電廠',
-        reading: 'faat3 din6 cong2',
+        readings: ['faat3 din6 cong2'],
       },
     ],
     tags: [
@@ -59,7 +59,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '排污',
-        reading: 'paai4 wu1',
+        readings: ['paai4 wu1'],
       },
     ],
     tags: [
@@ -114,7 +114,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '揀選',
-        reading: 'gaan2 syun2',
+        readings: ['gaan2 syun2'],
       },
     ],
     tags: [
@@ -163,7 +163,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '背景',
-        reading: 'bui3 ging2',
+        readings: ['bui3 ging2'],
       },
     ],
     tags: [
@@ -220,7 +220,7 @@ const expectedEntries = [
     headwords: [
       {
         text: '天干地支',
-        reading: 'tin1 gon1 dei6 zi1',
+        readings: ['tin1 gon1 dei6 zi1'],
       },
     ],
     tags: [
@@ -279,11 +279,11 @@ const expectedEntries = [
     headwords: [
       {
         text: '着',
-        reading: 'zoek6',
+        readings: ['zoek6'],
       },
       {
         text: '著',
-        reading: 'zoek6',
+        readings: ['zoek6'],
       },
     ],
     tags: [
@@ -366,6 +366,43 @@ const expectedEntries = [
               '你小心啲同我應付下。 (nei5 siu2 sam1 di1 tung4 ngo5 jing3 fu6 haa5.)',
             ],
             eng: ['Handle this well (for me).'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 93305,
+    headwords: [
+      {
+        text: '揸正嚟做',
+        readings: ['zaa1 zeng3 lai4 zou6', 'zaa1 zeng3 lei4 zou6'],
+      },
+    ],
+    tags: [
+      {
+        name: 'pos',
+        value: '動詞',
+      },
+      {
+        name: 'sim',
+        value: '揸正',
+      },
+    ],
+    senses: [
+      {
+        explanation: {
+          yue: ['嚴格依照規矩，不留餘地，冇人情講'],
+          eng: [
+            'to follow the rules strictly; to "go by the book"; to leave no room for discretion',
+          ],
+        },
+        egs: [
+          {
+            yue: [
+              '唔好怪我揸正嚟做。 (m4 hou2 gwaai3 ngo5 zaa1 zeng3 lei4 zou6.)',
+            ],
+            eng: ["Don't blame me for following the rules too strictly."],
           },
         ],
       },

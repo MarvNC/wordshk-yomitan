@@ -2,10 +2,10 @@ import { convertReadingToRubySC } from './parseTextToSC.js';
 
 /**
  * Converts headword(s) to structured content.
- * @param {TextReadingPair[]} headwords
+ * @param {Headword[]} headwords
  */
 function convertHeadwordsToSC(headwords) {
-  const headwordsSCList = headwords.map(headwordToSC);
+  const headwordsSCList = headwordsToSC(headwords);
   const separator = '・';
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
@@ -36,11 +36,22 @@ function convertHeadwordsToSC(headwords) {
 
 /**
  * Converts a headword to structured content.
- * @param {TextReadingPair} headword
- * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+ * @param {Headword[]} headwords
+ * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
  */
-function headwordToSC(headword) {
-  return convertReadingToRubySC(headword);
+function headwordsToSC(headwords) {
+  /**
+   * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
+   */
+  const headwordsSCList = [];
+  for (const headword of headwords) {
+    headwordsSCList.push(
+      ...headword.readings.map((reading) =>
+        convertReadingToRubySC(headword.text, reading)
+      )
+    );
+  }
+  return headwordsSCList;
 }
 
 export { convertHeadwordsToSC };

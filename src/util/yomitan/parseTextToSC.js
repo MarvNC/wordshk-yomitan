@@ -28,7 +28,9 @@ function convertTextToSC(rawText, languageCode) {
 
   try {
     const readings = parseCantoneseReadings(phrase, reading);
-    return readings.map(convertReadingToRubySC);
+    return readings.map(({ text, reading }) =>
+      convertReadingToRubySC(text, reading)
+    );
   } catch (error) {
     return cleanedText;
   }
@@ -44,17 +46,25 @@ function cleanRawText(rawText) {
 
 /**
  * Parses a text string into a structured content object with ruby text for readings
- * @param {TextReadingPair} reading
+ * @param {string} text
+ * @param {string} reading
  * @returns {import("yomichan-dict-builder/dist/types/yomitan/termbank").StructuredContent}
  */
-function convertReadingToRubySC(reading) {
+function convertReadingToRubySC(text, reading) {
+  // Check that both text and reading are type string, if not then cast to string
+  if (typeof text !== 'string') {
+    text = String(text);
+  }
+  if (typeof reading !== 'string') {
+    reading = String(reading);
+  }
   return {
     tag: 'ruby',
     content: [
-      reading.text,
+      text,
       {
         tag: 'rt',
-        content: reading.reading,
+        content: reading,
       },
     ],
   };

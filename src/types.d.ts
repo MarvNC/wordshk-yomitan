@@ -34,6 +34,11 @@ type TextReadingPair = {
   reading: string;
 };
 
+type Headword = {
+  text: string;
+  readings: string[];
+};
+
 type Tag = {
   name: string;
   value: string;
@@ -50,7 +55,7 @@ type LanguageData = {
 
 type DictionaryEntry = {
   id: number;
-  headwords: TextReadingPair[];
+  headwords: Headword[];
   tags: Tag[];
   senses: Sense[];
 };
