@@ -1,19 +1,22 @@
 /**
  * Given a list of dictionary entries, find all unique labels.
  * @param {DictionaryEntry[]} dictionaryEntries
- * @returns {Set<string>} Set of unique labels
+ * @returns {Record<string, Set<string>>}
  */
-function findAllLabels(dictionaryEntries) {
-  const uniqueLabels = new Set();
+function findLabelValues(dictionaryEntries) {
+  const tagCategories = {
+    label: new Set(),
+    pos: new Set(),
+  };
   for (const entry of dictionaryEntries) {
     for (const tag of entry.tags) {
-      if (tag.name === 'label') {
-        uniqueLabels.add(tag.value);
+      if (tagCategories[tag.name]) {
+        tagCategories[tag.name].add(tag.value);
       }
     }
   }
-  console.log(`Found ${uniqueLabels.size} unique labels.`);
-  return uniqueLabels;
+  console.log(tagCategories);
+  return tagCategories;
 }
 
-export { findAllLabels };
+export { findLabelValues };
