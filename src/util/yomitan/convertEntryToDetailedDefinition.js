@@ -21,7 +21,7 @@ function convertEntryToDetailedDefinition(entry) {
         },
         lang: 'yue',
         content: {
-          tag: 'ol',
+          tag: 'ul',
           data: {
             wordshk: 'sense-list',
           },
