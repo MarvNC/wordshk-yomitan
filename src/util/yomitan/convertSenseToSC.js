@@ -186,7 +186,7 @@ function convertLanguageEntryToDiv(language, languageTexts) {
       data: {
         wordshk: 'langtext',
       },
-      content: convertTextToSC(languageText, languageInfo.langCode),
+      content: convertTextToSC(languageText, language),
     };
     // Change text size for selected languages
     const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
