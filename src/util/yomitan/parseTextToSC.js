@@ -8,28 +8,29 @@ import { parseCantoneseReadings } from '../textHandling/parseCantoneseReadings.j
  */
 function convertTextToSC(rawText, languageCode) {
   const rubyTextLangs = ['yue', 'zho', 'lzh'];
+  const cleanedText = cleanRawText(rawText);
   if (!rubyTextLangs.includes(languageCode)) {
-    return rawText;
+    return cleanedText;
   }
   // Parse brackets for possible reading
   const bracketRegex = /(.+)\(([^\(\)]+)\)$/;
-  const [_, phrase, reading] = rawText.match(bracketRegex) || [];
+  const [_, phrase, reading] = cleanedText.match(bracketRegex) || [];
 
   if (!phrase || !reading) {
-    return rawText;
+    return cleanedText;
   }
 
   // If reading doesn't have alphanumeric characters, it's not a jyut reading
   const hasEnglishChars = /[a-zA-Z0-9]/.test(reading);
   if (!hasEnglishChars) {
-    return rawText;
+    return cleanedText;
   }
 
   try {
-    const readings = parseCantoneseReadings(cleanRawText(phrase), reading);
+    const readings = parseCantoneseReadings(phrase, reading);
     return readings.map(convertReadingToRubySC);
   } catch (error) {
-    return rawText;
+    return cleanedText;
   }
 }
 
