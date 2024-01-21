@@ -71,7 +71,7 @@ function convertSenseToLiSC(sense) {
         data: {
           wordshk: 'explanation',
         },
-        content: convertLanguageDataToLiSC(sense.explanation, false),
+        content: convertLanguageDataToLiSC(sense.explanation, true),
       },
       {
         tag: 'div',
@@ -141,8 +141,7 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
       ...convertLanguageEntryToDiv(
         // @ts-ignore
         language,
-        languageData[language],
-        isExplanation
+        languageData[language]
       )
     );
   }
@@ -170,10 +169,9 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
  * Converts a single language entry to a li item
  * @param {Language} language
  * @param {string[]} languageTexts
- * @param {boolean} isExplanation
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
  */
-function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
+function convertLanguageEntryToDiv(language, languageTexts) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
@@ -190,14 +188,12 @@ function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
       },
       content: convertTextToSC(languageText, languageInfo.langCode),
     };
-    if (!isExplanation) {
-      // Change text size for selected languages
-      const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-      const isCJK = cjkLangs.includes(language);
-      textContentSpan.style = {
-        fontSize: isCJK ? '120%' : '80%',
-      };
-    }
+    // Change text size for selected languages
+    const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
+    const isCJK = cjkLangs.includes(language);
+    textContentSpan.style = {
+      fontSize: isCJK ? '120%' : '80%',
+    };
 
     /**
      * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
@@ -215,9 +211,7 @@ function convertLanguageEntryToDiv(language, languageTexts, isExplanation) {
         style: {
           color: '#888',
         },
-        content: `${
-          isExplanation ? languageInfo.name : languageInfo.shortName
-        }› `,
+        content: `${languageInfo.name}› `,
       });
     }
 
