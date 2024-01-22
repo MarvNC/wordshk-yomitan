@@ -72,9 +72,9 @@ function parseTags(entryLines) {
   }
   const tags = firstLine.split(')(').map((tag) => {
     tag = tag.replace(/[()]/g, '');
-    let [name, value] = tag.split(':');
-    name = name.trim();
-    value = value.trim();
+    let colonIndex = tag.indexOf(':');
+    const name = tag.slice(0, colonIndex).trim();
+    const value = tag.slice(colonIndex + 1).trim();
     return {
       name,
       value,

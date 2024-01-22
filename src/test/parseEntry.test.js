@@ -408,6 +408,44 @@ const expectedEntries = [
       },
     ],
   },
+  {
+    id: 96792,
+    headwords: [
+      {
+        text: '牛河博士',
+        readings: ['ngau4 ho2 bok3 si6'],
+      },
+    ],
+    tags: [
+      {
+        name: 'pos',
+        value: '名詞',
+      },
+      {
+        name: 'label',
+        value: '專名',
+      },
+      {
+        name: 'label',
+        value: '潮語',
+      },
+      {
+        name: 'ref',
+        value: 'https://evchk.fandom.com/zh/wiki/曹宏威',
+      },
+    ],
+    senses: [
+      {
+        explanation: {
+          yue: [
+            '香港#學者 曹宏威喺#網民 之間嘅叫法，佢因為#乾炒牛河 而一舉成名',
+          ],
+          eng: ['Wung-wai Tso, literally "Doctor Beef Chow-fun"'],
+        },
+        egs: [],
+      },
+    ],
+  },
 ];
 
 /**
