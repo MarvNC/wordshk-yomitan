@@ -98,29 +98,35 @@ function convertExampleToSC(
   exampleText,
   exampleEmoji
 ) {
-  return [
-    {
-      tag: 'li',
-      style: {
-        listStyleType: `"${exampleEmoji}"`,
-      },
-      data: {
-        wordshk: 'example-type-header',
-      },
-      content: exampleText,
+  return {
+    tag: 'ul',
+    data: {
+      wordshk: exampleType,
     },
-    {
-      tag: 'ul',
-      data: {
-        wordshk: exampleType,
+    content: [
+      {
+        tag: 'li',
+        style: {
+          listStyleType: `"${exampleEmoji}"`,
+        },
+        data: {
+          wordshk: 'example-type-header',
+        },
+        content: exampleText,
       },
-      content: [
-        ...languageDatas.map((languageData) => {
-          return convertLanguageDataToLiSC(languageData, false);
-        }),
-      ],
-    },
-  ];
+      {
+        tag: 'ul',
+        data: {
+          wordshk: `${exampleType}-list`,
+        },
+        content: [
+          ...languageDatas.map((languageData) => {
+            return convertLanguageDataToLiSC(languageData, false);
+          }),
+        ],
+      },
+    ],
+  };
 }
 
 /**
