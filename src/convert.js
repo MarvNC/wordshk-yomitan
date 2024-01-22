@@ -35,7 +35,7 @@ const exportDirectory = './dist';
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
     .setTitle(`Words.hk 粵典 [${dateString}]`)
-    .setRevision(`wordshk-${dateString}`);
+    .setRevision(`${getVersion()}`);
   await dictionary.setIndex(dictionaryIndex.build());
 
   for (const entry of dictionaryEntries) {
@@ -51,3 +51,13 @@ const exportDirectory = './dist';
   await dictionary.export(exportDirectory);
   console.log(`Exported dictionary to ${exportDirectory}.`);
 })();
+
+/**
+ * Get the version from the package.json file.
+ * @returns {string} The version.
+ */
+function getVersion() {
+  const packageJsonPath = path.join(process.cwd(), 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  return packageJson.version;
+}
