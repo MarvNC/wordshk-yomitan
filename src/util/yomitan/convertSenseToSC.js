@@ -159,8 +159,7 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
   const sc = {
     tag: 'li',
     style: {
-      marginTop: '0.2em',
-      marginBottom: '0.5em',
+      marginBottom: isExplanation ? '0.3em' : '0.5em',
       listStyleType: isExplanation ? 'none' : 'circle',
     },
     data: {
@@ -227,12 +226,14 @@ function convertLanguageEntryToListItems(
     };
 
     // Change text size for selected languages
-    if (!isExplanation) {
-      const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-      const isCJK = cjkLangs.includes(language);
-      // @ts-ignore
-      singleLanguageLi.style.fontSize = isCJK ? '1.2em' : '0.75em';
-    }
+    const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
+    const isCJK = cjkLangs.includes(language);
+    // @ts-ignore
+    singleLanguageLi.style.fontSize = isCJK
+      ? '1.2em'
+      : isExplanation
+      ? '1em'
+      : '0.75em';
 
     languageLiScArray.push(singleLanguageLi);
   }
