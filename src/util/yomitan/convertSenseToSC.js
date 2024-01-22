@@ -98,29 +98,35 @@ function convertExampleToSC(
   exampleText,
   exampleEmoji
 ) {
-  return [
-    {
-      tag: 'li',
-      style: {
-        listStyleType: `"${exampleEmoji}"`,
-      },
-      data: {
-        wordshk: 'example-type-header',
-      },
-      content: exampleText,
+  return {
+    tag: 'ul',
+    data: {
+      wordshk: exampleType,
     },
-    {
-      tag: 'ul',
-      data: {
-        wordshk: exampleType,
+    content: [
+      {
+        tag: 'li',
+        style: {
+          listStyleType: `"${exampleEmoji}"`,
+        },
+        data: {
+          wordshk: 'example-type-header',
+        },
+        content: exampleText,
       },
-      content: [
-        ...languageDatas.map((languageData) => {
-          return convertLanguageDataToLiSC(languageData, false);
-        }),
-      ],
-    },
-  ];
+      {
+        tag: 'ul',
+        data: {
+          wordshk: `${exampleType}-list`,
+        },
+        content: [
+          ...languageDatas.map((languageData) => {
+            return convertLanguageDataToLiSC(languageData, false);
+          }),
+        ],
+      },
+    ],
+  };
 }
 
 /**
@@ -138,10 +144,11 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
 
   for (const language of Object.keys(languageData)) {
     languageDivArray.push(
-      ...convertLanguageEntryToDiv(
+      ...convertLanguageEntryToListItems(
         // @ts-ignore
         language,
-        languageData[language]
+        languageData[language],
+        isExplanation
       )
     );
   }
@@ -152,8 +159,7 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
   const sc = {
     tag: 'li',
     style: {
-      marginTop: '0.2em',
-      marginBottom: '0.5em',
+      marginBottom: isExplanation ? '0.3em' : '0.5em',
       listStyleType: isExplanation ? 'none' : 'circle',
     },
     data: {
@@ -166,12 +172,17 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
 }
 
 /**
- * Converts a single language entry to a li item
+ * Converts a single language entry consisting of multiple language contents to a list of lis
  * @param {Language} language
  * @param {string[]} languageTexts
+ * @param {boolean} isExplanation whether the languageData is an explanation
  * @returns {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
  */
-function convertLanguageEntryToDiv(language, languageTexts) {
+function convertLanguageEntryToListItems(
+  language,
+  languageTexts,
+  isExplanation
+) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
@@ -179,26 +190,9 @@ function convertLanguageEntryToDiv(language, languageTexts) {
   const languageInfo = languages[language];
   for (const languageText of languageTexts) {
     /**
-     * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
-     */
-    const textContentSpan = {
-      tag: 'span',
-      data: {
-        wordshk: 'langtext',
-      },
-      content: convertTextToSC(languageText, language),
-    };
-    // Change text size for selected languages
-    const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
-    const isCJK = cjkLangs.includes(language);
-    textContentSpan.style = {
-      fontSize: isCJK ? '120%' : '80%',
-    };
-
-    /**
      * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
      */
-    const liChildren = [textContentSpan];
+    const liChildren = [convertTextToSC(languageText, language)];
 
     // Only push lang tag if non yue/eng language
     const noLanguageTagNecessaryLanguages = ['yue', 'eng'];
@@ -210,19 +204,38 @@ function convertLanguageEntryToDiv(language, languageTexts) {
         },
         style: {
           color: '#888',
+          fontSize: '0.8em',
         },
         content: `${languageInfo.name}› `,
       });
     }
 
-    languageLiScArray.push({
-      tag: 'div',
+    /**
+     * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+     */
+    const singleLanguageLi = {
+      tag: 'li',
       lang: languageInfo.langCode,
       content: liChildren,
+      style: {
+        listStyleType: 'none',
+      },
       data: {
         wordshk: languageInfo.langCode,
       },
-    });
+    };
+
+    // Change text size for selected languages
+    const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
+    const isCJK = cjkLangs.includes(language);
+    // @ts-ignore
+    singleLanguageLi.style.fontSize = isCJK
+      ? '1.2em'
+      : isExplanation
+      ? '1em'
+      : '0.75em';
+
+    languageLiScArray.push(singleLanguageLi);
   }
 
   return languageLiScArray;
