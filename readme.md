@@ -8,6 +8,12 @@ Built using
 more Yomitan dictionaries and tools, see
 [Yomichan Dictionaries](https://github.com/MarvNC/yomichan-dictionaries).
 
+## Download
+
+🚧 Coming soon 🚧
+
+<!-- ## Screenshots -->
+
 ## Attribution
 
 This Yomitan dictionary is built off the free data provided by words.hk and is
