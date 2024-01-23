@@ -1,5 +1,6 @@
 import { Dictionary, DictionaryIndex } from 'yomichan-dict-builder';
 import path from 'path';
+import fs from 'fs';
 
 import { getCSVInfo } from './util/csv/csvHandler.js';
 import { parseCSVEntries } from './util/csv/parseCsvEntriesToJson.js';

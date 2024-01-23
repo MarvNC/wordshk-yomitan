@@ -1,9 +1,8 @@
 {
   "scripts": {
-    "start": "npm run getURL && npm run download",
-    "getURL": "node src/downloadLatest.js",
-    "download": "sh src/scripts/download_unzip.sh",
-    "build": "node src/convert.js",
+    "download": "node src/downloadLatest.js && sh src/scripts/download_unzip.sh",
+    "buildTermDict": "node src/convertToTermDictionary.js",
+    "buildLatest": "npm run download && npm run buildTermDict",
     "test": "ava"
   },
   "dependencies": {
