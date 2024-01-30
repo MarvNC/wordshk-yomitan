@@ -74,4 +74,6 @@ const languages = {
   },
 };
 
-export { languages };
+const IMAGE_FOLDER = 'images';
+
+export { languages, IMAGE_FOLDER };

@@ -8,6 +8,7 @@ import { convertEntryToYomitanTerms } from './util/yomitan/convertEntryToYomitan
 import { findLabelValues } from './util/entryParse/parseLabels.js';
 import { addYomitanTags } from './util/addYomitanTags.js';
 import { getAllImageURLs } from './util/entryParse/findImages.js';
+import { downloadImages } from './util/imageHandler/downloadImages.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
@@ -21,6 +22,8 @@ const exportDirectory = './dist';
   const uniqueLabels = findLabelValues(dictionaryEntries);
 
   const imageURLs = getAllImageURLs(dictionaryEntries);
+
+  await downloadImages(imageURLs);
 
   const dictionary = new Dictionary({
     fileName: `Words.hk ${dateString}.zip`,
