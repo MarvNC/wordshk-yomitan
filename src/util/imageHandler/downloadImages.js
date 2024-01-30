@@ -18,14 +18,24 @@ async function downloadImages(imageURLs) {
   }
   let successful = 0;
   let failed = 0;
-  for (const imageURL of imageURLs) {
+  const imageURLsArray = Array.from(imageURLs);
+  for (let i = 0; i < imageURLsArray.length; i++) {
+    const imageURL = imageURLsArray[i];
     try {
+      console.log(`${i}/${imageURLsArray.length}: Downloading ${imageURL}`);
       const fileName = getImageFileName(imageURL);
-      await downloadImage(imageURL, IMAGE_FOLDER, fileName);
-      await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
+      const wasDownloadedOnline = await downloadImage(
+        imageURL,
+        IMAGE_FOLDER,
+        fileName
+      );
+      // Delay if downloaded online
+      if (wasDownloadedOnline) {
+        await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
+      }
       successful++;
     } catch (error) {
-      console.error(error);
+      console.log(`Error when downloading ${imageURL}`);
       failed++;
       continue;
     }
@@ -39,6 +49,7 @@ async function downloadImages(imageURLs) {
  * @param {string} imageURL
  * @param {string} savePath
  * @param {string} fileName
+ * @returns {Promise<boolean>} - Returns true if the image was downloaded online.
  */
 async function downloadImage(imageURL, savePath, fileName) {
   // Check if path valid
@@ -49,19 +60,16 @@ async function downloadImage(imageURL, savePath, fileName) {
   try {
     new URL(imageURL);
   } catch (error) {
-    console.error(`Invalid URL: ${imageURL}`);
-    return;
+    throw new Error(`Invalid URL: ${imageURL}`);
   }
 
   const filePath = path.join(savePath, fileName);
 
   // Check if file already exists
   if (fs.existsSync(filePath)) {
-    console.log(`File already exists: ${fileName}`);
-    return;
+    return false;
   }
   // Download image
-  console.log(`Downloading ${fileName}...`);
   const response = await axios.get(imageURL, {
     responseType: 'arraybuffer',
   });
@@ -69,7 +77,7 @@ async function downloadImage(imageURL, savePath, fileName) {
 
   // Save image
   fs.writeFileSync(filePath, buffer);
-  console.log(`Saved ${fileName}`);
+  return true;
 }
 
 export { downloadImages };
