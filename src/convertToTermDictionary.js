@@ -7,6 +7,7 @@ import { parseCSVEntries } from './util/csv/parseCsvEntriesToJson.js';
 import { convertEntryToYomitanTerms } from './util/yomitan/convertEntryToYomitanTerms.js';
 import { findLabelValues } from './util/entryParse/parseLabels.js';
 import { addYomitanTags } from './util/addYomitanTags.js';
+import { getAllImageURLs } from './util/entryParse/findImages.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
@@ -18,6 +19,8 @@ const exportDirectory = './dist';
   console.log(`Found ${dictionaryEntries.length} entries.`);
 
   const uniqueLabels = findLabelValues(dictionaryEntries);
+
+  const imageURLs = getAllImageURLs(dictionaryEntries);
 
   const dictionary = new Dictionary({
     fileName: `Words.hk ${dateString}.zip`,
