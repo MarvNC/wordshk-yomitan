@@ -10,9 +10,13 @@ import { addYomitanTags } from './util/addYomitanTags.js';
 import { getAllImageURLs } from './util/entryParse/findImages.js';
 import { downloadImages } from './util/imageHandler/downloadImages.js';
 import { addYomitanImages } from './util/addYomitanImages.js';
+import { IMAGE_FOLDER } from './constants.js';
+import { compressImages } from './util/imageHandler/compressImages.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
+const compressedImagesFolder = './compressedImages';
+const imageResizeWidth = 500;
 
 (async () => {
   const { allCsv, dateString } = await getCSVInfo(dataFolder);
@@ -25,6 +29,12 @@ const exportDirectory = './dist';
   const imageURLs = getAllImageURLs(dictionaryEntries);
 
   await downloadImages(imageURLs);
+
+  const compressImagesPromise = compressImages(
+    IMAGE_FOLDER,
+    compressedImagesFolder,
+    imageResizeWidth
+  );
 
   const dictionary = new Dictionary({
     fileName: `Words.hk ${dateString}.zip`,
@@ -56,7 +66,7 @@ const exportDirectory = './dist';
 
   await addYomitanTags(dictionary, uniqueLabels);
 
-  console.log(`Adding images to dictionary.`)
+  console.log(`Adding images to dictionary.`);
   await addYomitanImages(dictionary);
 
   await dictionary.export(exportDirectory);
