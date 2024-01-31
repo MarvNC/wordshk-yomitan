@@ -10,13 +10,12 @@ import { addYomitanTags } from './util/addYomitanTags.js';
 import { getAllImageURLs } from './util/entryParse/findImages.js';
 import { downloadImages } from './util/imageHandler/downloadImages.js';
 import { addYomitanImages } from './util/addYomitanImages.js';
-import { IMAGE_FOLDER } from './constants.js';
+import { IMAGE_FOLDER, COMPRESSED_IMAGES_FOLDER } from './constants.js';
 import { compressImages } from './util/imageHandler/compressImages.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
-const compressedImagesFolder = './compressedImages';
-const imageResizeWidth = 500;
+const imageResizeWidth = 400;
 
 (async () => {
   const { allCsv, dateString } = await getCSVInfo(dataFolder);
@@ -32,7 +31,7 @@ const imageResizeWidth = 500;
 
   const compressImagesPromise = compressImages(
     IMAGE_FOLDER,
-    compressedImagesFolder,
+    COMPRESSED_IMAGES_FOLDER,
     imageResizeWidth
   );
 
@@ -69,7 +68,7 @@ const imageResizeWidth = 500;
   console.log(`Adding images to dictionary.`);
   // Wait for images to be compressed before adding
   await compressImagesPromise;
-  await addYomitanImages(dictionary, compressedImagesFolder);
+  await addYomitanImages(dictionary, COMPRESSED_IMAGES_FOLDER);
 
   await dictionary.export(exportDirectory);
   console.log(`Exported dictionary to ${exportDirectory}.`);

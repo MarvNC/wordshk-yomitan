@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import sharp from 'sharp';
 
 import { getImageFileName } from './getImageFileName.js';
 import { IMAGE_FOLDER } from '../../constants.js';
@@ -34,10 +35,17 @@ async function downloadImages(imageURLs) {
         await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
       }
       successful++;
+      const filePath = path.join(IMAGE_FOLDER, getImageFileName(imageURL));
+      // Check if the image is valid, delete if not
+      try {
+        await sharp(filePath).metadata();
+      } catch (error) {
+        console.log(`Deleting invalid image ${filePath}`);
+        fs.unlinkSync(filePath);
+      }
     } catch (error) {
       console.log(`Error when downloading ${imageURL}`);
       failed++;
-      continue;
     }
   }
   console.log(`Successfully downloaded ${successful} images.`);

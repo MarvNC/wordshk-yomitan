@@ -75,5 +75,6 @@ const languages = {
 };
 
 const IMAGE_FOLDER = 'images';
+const COMPRESSED_IMAGES_FOLDER = './compressedImages';
 
-export { languages, IMAGE_FOLDER };
+export { languages, IMAGE_FOLDER, COMPRESSED_IMAGES_FOLDER };
