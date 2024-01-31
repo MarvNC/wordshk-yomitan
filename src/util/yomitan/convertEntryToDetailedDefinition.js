@@ -31,14 +31,16 @@ function convertEntryToDetailedDefinition(entry) {
     },
   });
   // Image
+  let imageURLs = [];
   if (entry.tags.some((tag) => tag.name === 'img')) {
-    const imageNode = createEntryImageSC(entry);
-    if (imageNode.length > 0) {
-      SCArray.push(imageNode);
+    const { SCs, validImageURLs } = createEntryImageSC(entry);
+    if (SCs.length > 0) {
+      SCArray.push(SCs);
     }
+    imageURLs.push(...validImageURLs);
   }
   // Attribution
-  SCArray.push(createEntryAttribution(entry));
+  SCArray.push(createEntryAttribution(entry, imageURLs));
   return {
     type: 'structured-content',
     content: SCArray,
