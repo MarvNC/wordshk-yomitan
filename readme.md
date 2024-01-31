@@ -14,7 +14,9 @@ more Yomitan dictionaries and tools, see
 
 <!-- ## Screenshots -->
 
-## Attribution
+## Attribution/License
+
+The code in this repository is licensed under the MIT license.
 
 This Yomitan dictionary is built off the free data provided by words.hk and is
 licensed under the Non-Commercial Open Data License 1.0 that
