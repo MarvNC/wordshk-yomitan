@@ -9,6 +9,7 @@ import { findLabelValues } from './util/entryParse/parseLabels.js';
 import { addYomitanTags } from './util/addYomitanTags.js';
 import { getAllImageURLs } from './util/entryParse/findImages.js';
 import { downloadImages } from './util/imageHandler/downloadImages.js';
+import { addYomitanImages } from './util/addYomitanImages.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
@@ -54,6 +55,9 @@ const exportDirectory = './dist';
   console.log(`Finished adding entries to dictionary.`);
 
   await addYomitanTags(dictionary, uniqueLabels);
+
+  console.log(`Adding images to dictionary.`)
+  await addYomitanImages(dictionary);
 
   await dictionary.export(exportDirectory);
   console.log(`Exported dictionary to ${exportDirectory}.`);
