@@ -31,23 +31,27 @@ function compressImages(imageFolder, outputFolder, resizeWidth) {
  * @returns
  */
 async function compressImage(imagePath, outputPath, resizeWidth) {
-  const image = sharp(imagePath);
-  const metadata = await image.metadata();
-  // Check if image is jpg or png
-  if (metadata.format !== 'jpeg' && metadata.format !== 'png') {
-    // Copy image to output folder
+  try {
+    const image = sharp(imagePath);
+    const metadata = await image.metadata();
+    // Check if image is jpg or png
+    if (metadata.format !== 'jpeg' && metadata.format !== 'png') {
+      throw new Error(`Invalid image format: ${metadata.format}`);
+      return;
+    }
+    // Resize image
+    if (resizeWidth && metadata.width && metadata.width > resizeWidth) {
+      image.resize(resizeWidth);
+    }
+    // Compress image
+    if (metadata.format === 'jpeg') {
+      await image.jpeg({ quality: 85 }).toFile(outputPath);
+    } else {
+      await image.toFile(outputPath);
+    }
+  } catch (e) {
+    // Copy file if error
     fs.copyFileSync(imagePath, outputPath);
-    return;
-  }
-  // Resize image
-  if (resizeWidth && metadata.width && metadata.width > resizeWidth) {
-    image.resize(resizeWidth);
-  }
-  // Compress image
-  if (metadata.format === 'jpeg') {
-    await image.jpeg({ quality: 85 }).toFile(outputPath);
-  } else {
-    await image.toFile(outputPath);
   }
 }
 

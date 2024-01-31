@@ -67,7 +67,9 @@ const imageResizeWidth = 500;
   await addYomitanTags(dictionary, uniqueLabels);
 
   console.log(`Adding images to dictionary.`);
-  await addYomitanImages(dictionary);
+  // Wait for images to be compressed before adding
+  await compressImagesPromise;
+  await addYomitanImages(dictionary, compressedImagesFolder);
 
   await dictionary.export(exportDirectory);
   console.log(`Exported dictionary to ${exportDirectory}.`);
