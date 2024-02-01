@@ -7,6 +7,11 @@ import { parseCSVEntries } from './util/csv/parseCsvEntriesToJson.js';
 import { convertEntryToYomitanTerms } from './util/yomitan/convertEntryToYomitanTerms.js';
 import { findLabelValues } from './util/entryParse/parseLabels.js';
 import { addYomitanTags } from './util/addYomitanTags.js';
+import { getAllImageURLs } from './util/entryParse/findImages.js';
+import { downloadImages } from './util/imageHandler/downloadImages.js';
+import { addYomitanImages } from './util/addYomitanImages.js';
+import { IMAGE_FOLDER, COMPRESSED_IMAGES_FOLDER, IMAGE_RESIZE_WIDTH } from './constants.js';
+import { compressImages } from './util/imageHandler/compressImages.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
@@ -18,6 +23,16 @@ const exportDirectory = './dist';
   console.log(`Found ${dictionaryEntries.length} entries.`);
 
   const uniqueLabels = findLabelValues(dictionaryEntries);
+
+  const imageURLs = getAllImageURLs(dictionaryEntries);
+
+  await downloadImages(imageURLs);
+
+  const compressImagesPromise = compressImages(
+    IMAGE_FOLDER,
+    COMPRESSED_IMAGES_FOLDER,
+    IMAGE_RESIZE_WIDTH
+  );
 
   const dictionary = new Dictionary({
     fileName: `Words.hk ${dateString}.zip`,
@@ -48,6 +63,11 @@ const exportDirectory = './dist';
   console.log(`Finished adding entries to dictionary.`);
 
   await addYomitanTags(dictionary, uniqueLabels);
+
+  console.log(`Adding images to dictionary.`);
+  // Wait for images to be compressed before adding
+  await compressImagesPromise;
+  await addYomitanImages(dictionary, COMPRESSED_IMAGES_FOLDER);
 
   await dictionary.export(exportDirectory);
   console.log(`Exported dictionary to ${exportDirectory}.`);

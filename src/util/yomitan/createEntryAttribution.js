@@ -1,9 +1,10 @@
 /**
  *
  * @param {DictionaryEntry} entry
+ * @param {string[]} imageURLs
  * @returns {import("yomichan-dict-builder/dist/types/yomitan/termbank").StructuredContent}
  */
-function createEntryAttribution(entry) {
+function createEntryAttribution(entry, imageURLs) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
@@ -39,6 +40,28 @@ function createEntryAttribution(entry) {
       );
     }
   }
+
+  // Add image attributions
+  if (imageURLs.length > 0) {
+    for (const imageURL of imageURLs) {
+      try {
+        const url = new URL(imageURL);
+        const urlDomain = url.hostname;
+        contentAttributionSCArray.unshift(
+          {
+            tag: 'a',
+            href: imageURL,
+            content: `圖片: ${urlDomain}`,
+          },
+          {
+            tag: 'span',
+            content: ' | ',
+          }
+        );
+      } catch (error) {}
+    }
+  }
+
   return {
     tag: 'div',
     data: {
