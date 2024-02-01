@@ -33,6 +33,8 @@ function createEntryImageSC(entry) {
           wordshk: 'image',
         },
         path: filePath,
+        collapsed: false,
+        collapsible: false,
       });
       validImageURLs.push(tag.value);
     } catch (error) {}
