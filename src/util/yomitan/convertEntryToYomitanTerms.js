@@ -33,11 +33,10 @@ function convertEntryToYomitanTerms(dictionaryEntry) {
 function addTagsToTermEntry(dictionaryEntry, termEntry) {
   const termTags = [];
   const entryTags = [];
+  const tagTypesToAdd = ['pos', 'label'];
   for (const tag of dictionaryEntry.tags) {
-    if (tag.name === 'pos') {
+    if (tagTypesToAdd.includes(tag.name)) {
       entryTags.push(tag.value);
-    } else if (tag.name === 'label') {
-      termTags.push(tag.value);
     }
   }
   termEntry.setTermTags(termTags.join(' '));
