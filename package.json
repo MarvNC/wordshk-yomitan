@@ -3,6 +3,7 @@
     "download": "node src/downloadLatest.js && sh src/scripts/download_unzip.sh",
     "buildTermDict": "node src/convertToTermDictionary.js",
     "buildLatest": "npm run download && npm run buildTermDict",
+    "buildFreq": "node src/convertToFrequencyDictionary.js",
     "test": "ava"
   },
   "dependencies": {
