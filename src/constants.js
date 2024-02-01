@@ -76,5 +76,11 @@ const languages = {
 
 const IMAGE_FOLDER = 'images';
 const COMPRESSED_IMAGES_FOLDER = './compressedImages';
+const IMAGE_RESIZE_WIDTH = 400;
 
-export { languages, IMAGE_FOLDER, COMPRESSED_IMAGES_FOLDER };
+export {
+  languages,
+  IMAGE_FOLDER,
+  COMPRESSED_IMAGES_FOLDER,
+  IMAGE_RESIZE_WIDTH,
+};

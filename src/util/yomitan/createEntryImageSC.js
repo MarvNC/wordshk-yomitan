@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import { getImageFileName } from '../imageHandler/getImageFileName.js';
-import { IMAGE_FOLDER } from '../../constants.js';
+import { IMAGE_FOLDER, IMAGE_RESIZE_WIDTH } from '../../constants.js';
 
 /**
  * @param {DictionaryEntry} entry
@@ -27,7 +27,10 @@ function createEntryImageSC(entry) {
       if (!fs.existsSync(filePath)) {
         throw new Error(`File does not exist: ${filePath}`);
       }
-      SCs.push({
+      /**
+       * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
+       */
+      const imageNode = {
         tag: 'img',
         data: {
           wordshk: 'image',
@@ -35,7 +38,11 @@ function createEntryImageSC(entry) {
         path: filePath,
         collapsed: false,
         collapsible: false,
-      });
+      };
+      if (fileName.endsWith('.svg')) {
+        imageNode.width = IMAGE_RESIZE_WIDTH;
+      }
+      SCs.push(imageNode);
       validImageURLs.push(tag.value);
     } catch (error) {}
   }

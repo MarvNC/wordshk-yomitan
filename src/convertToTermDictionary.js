@@ -10,12 +10,11 @@ import { addYomitanTags } from './util/addYomitanTags.js';
 import { getAllImageURLs } from './util/entryParse/findImages.js';
 import { downloadImages } from './util/imageHandler/downloadImages.js';
 import { addYomitanImages } from './util/addYomitanImages.js';
-import { IMAGE_FOLDER, COMPRESSED_IMAGES_FOLDER } from './constants.js';
+import { IMAGE_FOLDER, COMPRESSED_IMAGES_FOLDER, IMAGE_RESIZE_WIDTH } from './constants.js';
 import { compressImages } from './util/imageHandler/compressImages.js';
 
 const dataFolder = './csvs';
 const exportDirectory = './dist';
-const imageResizeWidth = 400;
 
 (async () => {
   const { allCsv, dateString } = await getCSVInfo(dataFolder);
@@ -32,7 +31,7 @@ const imageResizeWidth = 400;
   const compressImagesPromise = compressImages(
     IMAGE_FOLDER,
     COMPRESSED_IMAGES_FOLDER,
-    imageResizeWidth
+    IMAGE_RESIZE_WIDTH
   );
 
   const dictionary = new Dictionary({
