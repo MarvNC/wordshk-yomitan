@@ -1,4 +1,4 @@
-import { languages } from '../../constants.js';
+import { LANGUAGES_DATA } from '../../constants.js';
 
 /**
  *
@@ -158,7 +158,7 @@ function parseLanguageData(text) {
       continue;
     }
     // Check if the language is a possible language
-    if (!languages[matchedLang]) {
+    if (!LANGUAGES_DATA[matchedLang]) {
       throw new Error(`Invalid language: ${matchedLang}`);
     }
     // Else a language is found

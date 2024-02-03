@@ -1,7 +1,7 @@
 /**
  * @type {Record<Language, { name: string, shortName: string, langCode: string }>}
  */
-const languages = {
+const LANGUAGES_DATA = {
   yue: {
     name: '廣東話',
     shortName: '粵',
@@ -79,7 +79,7 @@ const COMPRESSED_IMAGES_FOLDER = './compressedImages';
 const IMAGE_RESIZE_WIDTH = 400;
 
 export {
-  languages,
+  LANGUAGES_DATA,
   IMAGE_FOLDER,
   COMPRESSED_IMAGES_FOLDER,
   IMAGE_RESIZE_WIDTH,
