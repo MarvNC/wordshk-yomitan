@@ -10,7 +10,8 @@ more Yomitan dictionaries and tools, see
 
 ## Download
 
-🚧 Coming soon 🚧
+- 🚧 Words.hk for Yomitan (TBA)
+- [Words.hk Frequency](https://drive.google.com/open?id=14kx0q9EBftwqaZPw55y9USkXFQlUrjf1&usp=drive_fs)
 
 <!-- ## Screenshots -->
 

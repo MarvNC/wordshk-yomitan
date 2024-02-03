@@ -1,4 +1,4 @@
-import { languages } from '../../constants.js';
+import { LANGUAGES_DATA } from '../../constants.js';
 import { isStringSentence } from '../textHandling/textUtils.js';
 import { convertTextToSC } from './parseTextToSC.js';
 
@@ -187,7 +187,7 @@ function convertLanguageEntryToListItems(
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
    */
   const languageLiScArray = [];
-  const languageInfo = languages[language];
+  const languageInfo = LANGUAGES_DATA[language];
   for (const languageText of languageTexts) {
     /**
      * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
