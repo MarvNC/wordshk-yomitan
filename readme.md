@@ -20,10 +20,9 @@ more Yomitan dictionaries and tools, see
 
 ## Screenshots
 
-![chrome_廣東話_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-57-37](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/83eacfc1-6e31-453c-91c2-a8dac3be0bc4)
-![chrome_老虎_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-58-13](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/e882daa8-6fc4-491d-930e-ca9a0a081193)
-![chrome_全脂_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-58-35](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/51fa78ba-c882-4f8c-b159-57a86f08e74b)
-![chrome_講_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-58-48](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/233798e0-2363-48c4-9c11-6665e6262ef2)
+| ![chrome_廣東話_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-57-37](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/83eacfc1-6e31-453c-91c2-a8dac3be0bc4) | ![chrome_老虎_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-58-13](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/e882daa8-6fc4-491d-930e-ca9a0a081193) |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![chrome_全脂_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-58-35](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/51fa78ba-c882-4f8c-b159-57a86f08e74b)   | ![chrome_講_-_廣東話解釋__粵典_-_Google_Chrome_2024-02-03_22-58-48](https://github.com/MarvNC/wordshk-yomitan/assets/17340496/233798e0-2363-48c4-9c11-6665e6262ef2)   |
 
 ## Usage
 
