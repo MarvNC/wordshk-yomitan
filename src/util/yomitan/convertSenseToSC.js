@@ -108,6 +108,7 @@ function convertExampleToSC(
         tag: 'li',
         style: {
           listStyleType: `"${exampleEmoji}"`,
+          fontWeight: 'bold',
         },
         data: {
           wordshk: 'example-type-header',
