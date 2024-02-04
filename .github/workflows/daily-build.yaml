@@ -54,3 +54,4 @@ jobs:
           body: |
             This is an automated release of the latest Words.hk for Yomitan.
             For more information, please see the [README](https://github.com/MarvNC/wordshk-yomitan).
+            Download the latest release below: the file name should look like `Words.hk.YYYY-MM-DD.zip`.

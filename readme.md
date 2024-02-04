@@ -1,7 +1,12 @@
 # Words.hk for Yomitan
 
+[![](https://img.shields.io/github/v/tag/marvnc/wordshk-yomitan?style=for-the-badge&label=Last%20Release)](https://github.com/MarvNC/wordshk-yomitan/releases/latest)
+
 A conversion of the [words.hk](https://words.hk) dictionary for
-[Yomitan](https://github.com/themoeway/yomitan) (formerly Yomichan).
+[Yomitan](https://github.com/themoeway/yomitan) (formerly Yomichan). The
+words.hk dictionary data is fetched from
+[words.hk](https://words.hk/faiman/analysis/), built, then released
+automatically every day.
 
 Built using
 [yomichan-dict-builder](https://github.com/MarvNC/yomichan-dict-builder). For
@@ -10,10 +15,16 @@ more Yomitan dictionaries and tools, see
 
 ## Download
 
-- 🚧 Words.hk for Yomitan (TBA)
+- [Words.hk for Yomitan](https://github.com/MarvNC/wordshk-yomitan/releases/latest)
 - [Words.hk Frequency](https://drive.google.com/open?id=14kx0q9EBftwqaZPw55y9USkXFQlUrjf1&usp=drive_fs)
 
 <!-- ## Screenshots -->
+
+## Usage
+
+Simply download the dictionary and import it into Yomitan. For more detailed
+instructions, please see the
+[Yomitan documentation](https://github.com/themoeway/yomitan).
 
 ## Attribution/License
 
