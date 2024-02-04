@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const domain = 'https://words.hk';
 const requestURL = `${domain}/faiman/request_data/`;
-const csvURLtxt = 'csv.gz.URLs.txt';
 const csvDir = 'csvs';
 
 (async function downloadLatest() {
@@ -67,10 +66,6 @@ async function getCSVLinks(dom) {
 
   const csvLinks = csvLinkAnchors.map((a) => `${domain}${a.href}`);
 
-  // Write to file
-  // const filePath = path.join(__dirname, csvURLtxt);
-  // fs.writeFileSync(csvURLtxt, csvLinks.join('\n'));
-  // console.log(`Wrote csv links to ${csvURLtxt}`);
   return csvLinks;
 }
 
@@ -117,6 +112,7 @@ async function downloadCSVs(csvLinks) {
       .pipe(gzip)
       .pipe(destination)
       .on('finish', function () {
+        // Delete the .gz file
         fs.unlinkSync(fullPath);
       });
   }
