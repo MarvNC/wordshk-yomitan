@@ -2,7 +2,6 @@
   "scripts": {
     "download": "node src/downloadLatest.js",
     "buildTermDict": "node src/convertToTermDictionary.js",
-    "buildLatest": "npm run download && npm run buildTermDict",
     "buildFreq": "node src/convertToFrequencyDictionary.js",
     "test": "ava"
   },

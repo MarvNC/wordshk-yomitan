@@ -1,0 +1,37 @@
+name: Build and Release Dictionaries Daily
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Get Current Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Download Latest CSVs
+        run: npm run download
+
+      - name: Build Dictionary
+        run: npm run buildTermDict
+
+      - name: Create and Publish Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          tag_name: ${{ steps.date.outputs.date }}
+          name: ${{ steps.date.outputs.date }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            This is an automated release of the latest Words.hk for Yomitan.
+            For more information, please see the [README](https://github.com/MarvNC/wordshk-yomitan).
