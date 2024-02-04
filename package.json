@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "download": "node src/downloadLatest.js && sh src/scripts/download_unzip.sh",
+    "download": "node src/downloadLatest.js",
     "buildTermDict": "node src/convertToTermDictionary.js",
     "buildLatest": "npm run download && npm run buildTermDict",
     "buildFreq": "node src/convertToFrequencyDictionary.js",
@@ -12,7 +12,8 @@
     "csv-parser": "^3.0.0",
     "jsdom": "^23.0.1",
     "sharp": "^0.33.2",
-    "yomichan-dict-builder": "^2.2.0"
+    "yomichan-dict-builder": "^2.2.0",
+    "zlib": "^1.0.5"
   },
   "type": "module",
   "devDependencies": {
