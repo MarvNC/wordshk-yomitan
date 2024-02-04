@@ -1,3 +1,17 @@
+// const synonymEmoji = ;
+// const antonymEmoji = '🚫';
+
+const types = {
+  sim: {
+    emoji: '🔗',
+    text: '近義',
+  },
+  ant: {
+    emoji: '🚫',
+    text: '反義',
+  },
+};
+
 /**
  * Converts an entry to a ul list of the element's synonyms and antonyms.
  * @param {DictionaryEntry} entry
@@ -37,21 +51,43 @@ function convertEntryToSCType(entry, type) {
       exists: false,
     };
   }
-  let tagString = typeTags.map((tag) => tag.value).join('・');
+  // let tagString = typeTags.map((tag) => tag.value).join('・');
   return {
     SC: {
       tag: 'ul',
       data: {
         wordshk: `${type}-list`,
       },
-      lang: 'yue',
-      content: {
-        tag: 'li',
-        data: {
-          wordshk: type,
+      content: [
+        {
+          tag: 'li',
+          style: {
+            listStyleType: `"${types[type].emoji}"`,
+            fontWeight: 'bold',
+          },
+          data: {
+            wordshk: `${type}-header`,
+          },
+          content: types[type].text,
         },
-        content: tagString,
-      },
+        {
+          tag: 'ul',
+          /**
+           * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent[]}
+           */
+          content: typeTags.map((tag) => ({
+            tag: 'li',
+            data: {
+              wordshk: `${type}-entry`,
+            },
+            content: tag.value,
+            lang: 'yue',
+            style: {
+              fontSize: '1.2em',
+            },
+          })),
+        },
+      ],
     },
     exists: true,
   };
