@@ -2,6 +2,7 @@ import { convertHeadwordsToSC } from './convertHeadwordsToSC.js';
 import { convertSenseToLiSC } from './convertSenseToSC.js';
 import { createEntryAttribution } from './createEntryAttribution.js';
 import { createEntryImageSC } from './createEntryImageSC.js';
+import { convertEntryToSynAntsSC } from './convertEntryToSynAntsSC.js';
 
 /**
  * Converts a dictionary entry to a detailed definition.
@@ -15,6 +16,7 @@ function convertEntryToDetailedDefinition(entry) {
   const SCArray = [];
   // Headword
   SCArray.push(convertHeadwordsToSC(entry.headwords));
+
   // Senses with explanation/examples
   SCArray.push({
     tag: 'div',
@@ -30,6 +32,11 @@ function convertEntryToDetailedDefinition(entry) {
       content: entry.senses.map(convertSenseToLiSC),
     },
   });
+  
+  // Synonyms/antonyms
+  const synAntsSC = convertEntryToSynAntsSC(entry);
+  SCArray.push(...synAntsSC);
+
   // Image
   let imageURLs = [];
   if (entry.tags.some((tag) => tag.name === 'img')) {
@@ -39,6 +46,7 @@ function convertEntryToDetailedDefinition(entry) {
     }
     imageURLs.push(...validImageURLs);
   }
+  
   // Attribution
   SCArray.push(createEntryAttribution(entry, imageURLs));
   return {
