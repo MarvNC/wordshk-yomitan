@@ -15,15 +15,34 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Get Current Date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
       - name: Download Latest CSVs
         run: npm run download
 
       - name: Build Dictionary
         run: npm run buildTermDict
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*
+
+  publish-release:
+    needs: build-release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+      - name: Get Current Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Create and Publish Release
         uses: softprops/action-gh-release@v1
