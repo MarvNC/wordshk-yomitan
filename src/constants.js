@@ -84,3 +84,5 @@ export {
   COMPRESSED_IMAGES_FOLDER,
   IMAGE_RESIZE_WIDTH,
 };
+export const dataFolder = './csvs';
+export const exportDirectory = './dist';

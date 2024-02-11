@@ -1,26 +1,23 @@
 import { Dictionary, DictionaryIndex } from 'yomichan-dict-builder';
-import path from 'path';
-import fs from 'fs';
 
-import { getCSVInfo } from './util/csv/csvHandler.js';
-import { parseCSVEntries } from './util/csv/parseCsvEntriesToJson.js';
 import { convertEntryToYomitanTerms } from './util/yomitan/convertEntryToYomitanTerms.js';
 import { findLabelValues } from './util/entryParse/parseLabels.js';
 import { addYomitanTags } from './util/addYomitanTags.js';
 import { getAllImageURLs } from './util/entryParse/findImages.js';
 import { downloadImages } from './util/imageHandler/downloadImages.js';
 import { addYomitanImages } from './util/addYomitanImages.js';
-import { IMAGE_FOLDER, COMPRESSED_IMAGES_FOLDER, IMAGE_RESIZE_WIDTH } from './constants.js';
+import {
+  IMAGE_FOLDER,
+  COMPRESSED_IMAGES_FOLDER,
+  IMAGE_RESIZE_WIDTH,
+} from './constants.js';
 import { compressImages } from './util/imageHandler/compressImages.js';
-
-const dataFolder = './csvs';
-const exportDirectory = './dist';
+import { dataFolder, exportDirectory } from './constants.js';
+import { getVersion } from './util/getVersion.js';
+import { readAndParseCSVs } from './util/readAndParseCSVs.js';
 
 (async () => {
-  const { allCsv, dateString } = await getCSVInfo(dataFolder);
-  const allCsvPath = path.join(dataFolder, allCsv);
-  const dictionaryEntries = await parseCSVEntries(allCsvPath);
-  console.log(`Found ${dictionaryEntries.length} entries.`);
+  const { dictionaryEntries, dateString } = await readAndParseCSVs(dataFolder);
 
   const uniqueLabels = findLabelValues(dictionaryEntries);
 
@@ -72,13 +69,3 @@ const exportDirectory = './dist';
   await dictionary.export(exportDirectory);
   console.log(`Exported dictionary to ${exportDirectory}.`);
 })();
-
-/**
- * Get the version from the package.json file.
- * @returns {string} The version.
- */
-function getVersion() {
-  const packageJsonPath = path.join(process.cwd(), 'package.json');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.version;
-}
