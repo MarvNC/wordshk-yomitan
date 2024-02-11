@@ -3,12 +3,14 @@
     "download": "node src/downloadLatest.js",
     "buildTermDict": "node src/convertToTermDictionary.js",
     "buildFreq": "node src/convertToFrequencyDictionary.js",
+    "buildHonziDict": "node src/convertToHonziDictionary.js",
     "test": "ava"
   },
   "dependencies": {
     "@gerhobbelt/xregexp": "^4.4.0-32",
     "axios": "^1.6.7",
     "csv-parser": "^3.0.0",
+    "is-cjk-hanzi": "^1.0.0",
     "jsdom": "^23.0.1",
     "sharp": "^0.33.2",
     "yomichan-dict-builder": "^2.2.0",
