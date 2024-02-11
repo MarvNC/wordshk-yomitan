@@ -18,8 +18,10 @@ jobs:
       - name: Download Latest CSVs
         run: npm run download
 
-      - name: Build Dictionary
-        run: npm run buildTermDict
+      - name: Build Dictionaries
+        run: |
+          npm run buildTermDict
+          npm run buildHonziDict
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
