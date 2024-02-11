@@ -8,7 +8,7 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
   const { dictionaryEntries, dateString } = await readAndParseCSVs(dataFolder);
 
   const dictionary = new Dictionary({
-    fileName: `Words.hk 漢字 ${dateString}.zip`,
+    fileName: `Words.hk Honzi ${dateString}.zip`,
   });
 
   const dictionaryIndex = new DictionaryIndex()
