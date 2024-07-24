@@ -1,14 +1,19 @@
+import fs from 'fs/promises';
 import { Dictionary, DictionaryIndex, KanjiEntry } from 'yomichan-dict-builder';
 import { getVersion } from './util/getVersion.js';
-import { dataFolder, exportDirectory } from './constants.js';
+import { dataFolder, exportDirectory, HONZI_INDEX_FILE } from './constants.js';
 import { readAndParseCSVs } from './util/readAndParseCSVs.js';
 import { isSingleCJKHanzi } from 'is-cjk-hanzi';
 
 (async () => {
+  const tagName = process.argv[2] ?? 'latest';
+
   const { dictionaryEntries, dateString } = await readAndParseCSVs(dataFolder);
 
+  /** @type {`${string}.zip`} */
+  const honziDictionaryFilename = `Words.hk Honzi ${dateString}.zip`;
   const dictionary = new Dictionary({
-    fileName: `Words.hk Honzi ${dateString}.zip`,
+    fileName: honziDictionaryFilename,
   });
 
   const dictionaryIndex = new DictionaryIndex()
@@ -23,12 +28,24 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
     .setTitle(`Words.hk 粵典 漢字 [${dateString}]`)
-    .setRevision(`${getVersion()}`);
+    .setRevision(`${getVersion()}`)
+    .setIsUpdatable(true)
+    .setIndexUrl(
+      `https://github.com/MarvNC/wordshk-yomitan/releases/download/latest/${HONZI_INDEX_FILE}`
+    )
+    .setDownloadUrl(
+      `https://github.com/MarvNC/wordshk-yomitan/releases/download/${tagName}/${honziDictionaryFilename}`
+    );
   await dictionary.setIndex(dictionaryIndex.build());
+
+  // save index file to exportDirectory
+  await fs.writeFile(
+    `${exportDirectory}/${HONZI_INDEX_FILE}`,
+    JSON.stringify(dictionaryIndex.build())
+  );
 
   for (const entry of dictionaryEntries) {
     addHonziEntry(dictionary, entry);
-    // const kanjiEntry = new KanjiEntry(entry.)
   }
   console.log(`Finished adding entries to dictionary.`);
 

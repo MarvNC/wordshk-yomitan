@@ -18,14 +18,14 @@ jobs:
       - name: Download Latest CSVs
         run: npm run download
 
-      - name: Build Dictionaries
-        run: |
-          npm run buildTermDict
-          npm run buildHonziDict
-
       - name: Get Current Date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Build Dictionaries
+        run: |
+          npm run buildTermDict ${{ steps.date.outputs.date }}
+          npm run buildHonziDict ${{ steps.date.outputs.date }}
 
       - name: Create and Publish Release
         uses: softprops/action-gh-release@v2
