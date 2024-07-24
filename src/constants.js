@@ -86,3 +86,6 @@ export {
 };
 export const dataFolder = './csvs';
 export const exportDirectory = './dist';
+
+export const TERM_INDEX_FILE = 'term_index.json';
+export const HONZI_INDEX_FILE = 'honzi_index.json';

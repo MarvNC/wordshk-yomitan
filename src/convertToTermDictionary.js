@@ -1,3 +1,4 @@
+import fs from 'fs/promises';
 import { Dictionary, DictionaryIndex } from 'yomichan-dict-builder';
 
 import { convertEntryToYomitanTerms } from './util/yomitan/convertEntryToYomitanTerms.js';
@@ -10,6 +11,7 @@ import {
   IMAGE_FOLDER,
   COMPRESSED_IMAGES_FOLDER,
   IMAGE_RESIZE_WIDTH,
+  TERM_INDEX_FILE,
 } from './constants.js';
 import { compressImages } from './util/imageHandler/compressImages.js';
 import { dataFolder, exportDirectory } from './constants.js';
@@ -17,6 +19,8 @@ import { getVersion } from './util/getVersion.js';
 import { readAndParseCSVs } from './util/readAndParseCSVs.js';
 
 (async () => {
+  const tagName = process.argv[2] ?? 'latest';
+
   const { dictionaryEntries, dateString } = await readAndParseCSVs(dataFolder);
 
   const uniqueLabels = findLabelValues(dictionaryEntries);
@@ -31,8 +35,10 @@ import { readAndParseCSVs } from './util/readAndParseCSVs.js';
     IMAGE_RESIZE_WIDTH
   );
 
+  /** @type {`${string}.zip`} */
+  const termDictionaryFileName = `Words.hk.${dateString}.zip`;
   const dictionary = new Dictionary({
-    fileName: `Words.hk ${dateString}.zip`,
+    fileName: termDictionaryFileName,
   });
 
   const dictionaryIndex = new DictionaryIndex()
@@ -48,8 +54,21 @@ import { readAndParseCSVs } from './util/readAndParseCSVs.js';
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
     .setTitle(`Words.hk 粵典 [${dateString}]`)
-    .setRevision(`${getVersion()}`);
+    .setRevision(`${dateString} - ${getVersion()}`)
+    .setIsUpdatable(true)
+    .setIndexUrl(
+      `https://github.com/MarvNC/wordshk-yomitan/releases/download/latest/${TERM_INDEX_FILE}`
+    )
+    .setDownloadUrl(
+      `https://github.com/MarvNC/wordshk-yomitan/releases/download/${tagName}/${termDictionaryFileName}`
+    );
   await dictionary.setIndex(dictionaryIndex.build());
+
+  // save index file to exportDirectory
+  await fs.writeFile(
+    `${exportDirectory}/${TERM_INDEX_FILE}`,
+    JSON.stringify(dictionaryIndex.build())
+  );
 
   for (const entry of dictionaryEntries) {
     const terms = convertEntryToYomitanTerms(entry);
