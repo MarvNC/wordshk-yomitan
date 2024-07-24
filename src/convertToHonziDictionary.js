@@ -31,7 +31,7 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
     .setRevision(dateString)
     .setIsUpdatable(true)
     .setIndexUrl(
-      `https://github.com/MarvNC/wordshk-yomitan/releases/latest/download${HONZI_INDEX_FILE}`
+      `https://github.com/MarvNC/wordshk-yomitan/releases/latest/download/${HONZI_INDEX_FILE}`
     )
     .setDownloadUrl(
       `https://github.com/MarvNC/wordshk-yomitan/releases/download/${tagName}/${honziDictionaryFilename}`
