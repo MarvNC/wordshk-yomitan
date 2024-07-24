@@ -54,7 +54,7 @@ import { readAndParseCSVs } from './util/readAndParseCSVs.js';
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
     .setTitle(`Words.hk 粵典 [${dateString}]`)
-    .setRevision(`${getVersion()}`)
+    .setRevision(`${dateString} - ${getVersion()}`)
     .setIsUpdatable(true)
     .setIndexUrl(
       `https://github.com/MarvNC/wordshk-yomitan/releases/download/latest/${TERM_INDEX_FILE}`

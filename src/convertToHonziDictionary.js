@@ -11,7 +11,7 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
   const { dictionaryEntries, dateString } = await readAndParseCSVs(dataFolder);
 
   /** @type {`${string}.zip`} */
-  const honziDictionaryFilename = `Words.hk Honzi ${dateString}.zip`;
+  const honziDictionaryFilename = `Words.hk.Honzi.${dateString}.zip`;
   const dictionary = new Dictionary({
     fileName: honziDictionaryFilename,
   });
@@ -28,7 +28,7 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
     .setTitle(`Words.hk 粵典 漢字 [${dateString}]`)
-    .setRevision(`${getVersion()}`)
+    .setRevision(`${dateString} - ${getVersion()}`)
     .setIsUpdatable(true)
     .setIndexUrl(
       `https://github.com/MarvNC/wordshk-yomitan/releases/download/latest/${HONZI_INDEX_FILE}`
