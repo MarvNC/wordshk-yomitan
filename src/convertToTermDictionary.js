@@ -60,7 +60,7 @@ import { readAndParseCSVs } from './util/readAndParseCSVs.js';
       `https://github.com/MarvNC/wordshk-yomitan/releases/latest/download/${TERM_INDEX_FILE}`
     )
     .setDownloadUrl(
-      `https://github.com/MarvNC/wordshk-yomitan/releases/${tagName}/download/${termDictionaryFileName}`
+      `https://github.com/MarvNC/wordshk-yomitan/releases/download/${tagName}/${termDictionaryFileName}`
     );
   await dictionary.setIndex(dictionaryIndex.build());
 

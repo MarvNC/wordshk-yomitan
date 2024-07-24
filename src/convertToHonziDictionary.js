@@ -34,7 +34,7 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
       `https://github.com/MarvNC/wordshk-yomitan/releases/latest/download${HONZI_INDEX_FILE}`
     )
     .setDownloadUrl(
-      `https://github.com/MarvNC/wordshk-yomitan/releases/${tagName}/download/${honziDictionaryFilename}`
+      `https://github.com/MarvNC/wordshk-yomitan/releases/download/${tagName}/${honziDictionaryFilename}`
     );
   await dictionary.setIndex(dictionaryIndex.build());
 
