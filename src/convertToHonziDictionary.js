@@ -52,7 +52,7 @@ function addHonziEntry(dictionary, entry) {
     );
     for (const sense of entry.senses) {
       for (const explanationText of Object.values(sense.explanation)) {
-        kanjiEntry.addMeaning(explanationText);
+        kanjiEntry.addMeanings(explanationText);
       }
     }
     dictionary.addKanji(kanjiEntry.build());
