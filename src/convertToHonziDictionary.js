@@ -28,7 +28,7 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
     .setTitle(`Words.hk 粵典 漢字 [${dateString}]`)
-    .setRevision(`${dateString} - ${getVersion()}`)
+    .setRevision(dateString)
     .setIsUpdatable(true)
     .setIndexUrl(
       `https://github.com/MarvNC/wordshk-yomitan/releases/download/latest/${HONZI_INDEX_FILE}`
@@ -39,10 +39,7 @@ import { isSingleCJKHanzi } from 'is-cjk-hanzi';
   await dictionary.setIndex(dictionaryIndex.build());
 
   // save index file to exportDirectory
-  await fs.writeFile(
-    `${exportDirectory}/${HONZI_INDEX_FILE}`,
-    JSON.stringify(dictionaryIndex.build())
-  );
+  await dictionaryIndex.export(exportDirectory, HONZI_INDEX_FILE);
 
   for (const entry of dictionaryEntries) {
     addHonziEntry(dictionary, entry);

@@ -54,7 +54,7 @@ import { readAndParseCSVs } from './util/readAndParseCSVs.js';
       Converted using https://github.com/MarvNC/yomichan-dict-builder`
     )
     .setTitle(`Words.hk 粵典 [${dateString}]`)
-    .setRevision(`${dateString} - ${getVersion()}`)
+    .setRevision(dateString)
     .setIsUpdatable(true)
     .setIndexUrl(
       `https://github.com/MarvNC/wordshk-yomitan/releases/download/latest/${TERM_INDEX_FILE}`
@@ -65,10 +65,7 @@ import { readAndParseCSVs } from './util/readAndParseCSVs.js';
   await dictionary.setIndex(dictionaryIndex.build());
 
   // save index file to exportDirectory
-  await fs.writeFile(
-    `${exportDirectory}/${TERM_INDEX_FILE}`,
-    JSON.stringify(dictionaryIndex.build())
-  );
+  await dictionaryIndex.export(exportDirectory, TERM_INDEX_FILE);
 
   for (const entry of dictionaryEntries) {
     const terms = convertEntryToYomitanTerms(entry);

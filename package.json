@@ -13,7 +13,7 @@
     "is-cjk-hanzi": "^1.0.0",
     "jsdom": "^23.0.1",
     "sharp": "^0.33.2",
-    "yomichan-dict-builder": "^2.7.0",
+    "yomichan-dict-builder": "^2.9.0",
     "zlib": "^1.0.5"
   },
   "type": "module",
