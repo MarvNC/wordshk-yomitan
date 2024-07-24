@@ -57,10 +57,10 @@ import { readAndParseCSVs } from './util/readAndParseCSVs.js';
     .setRevision(dateString)
     .setIsUpdatable(true)
     .setIndexUrl(
-      `https://github.com/MarvNC/wordshk-yomitan/releases/download/latest/${TERM_INDEX_FILE}`
+      `https://github.com/MarvNC/wordshk-yomitan/releases/latest/download/${TERM_INDEX_FILE}`
     )
     .setDownloadUrl(
-      `https://github.com/MarvNC/wordshk-yomitan/releases/download/${tagName}/${termDictionaryFileName}`
+      `https://github.com/MarvNC/wordshk-yomitan/releases/${tagName}/download/${termDictionaryFileName}`
     );
   await dictionary.setIndex(dictionaryIndex.build());
 
