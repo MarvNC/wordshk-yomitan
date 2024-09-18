@@ -17,7 +17,7 @@ more Yomitan dictionaries and tools, see
 
 - [Words.hk for Yomitan](https://github.com/MarvNC/wordshk-yomitan/releases/latest)
 - [Words.hk 漢字 for Yomitan](https://github.com/MarvNC/wordshk-yomitan/releases/latest)
-- [Words.hk Frequency](https://drive.google.com/open?id=14kx0q9EBftwqaZPw55y9USkXFQlUrjf1&usp=drive_fs)
+- [Words.hk Frequency](https://github.com/MarvNC/wordshk-yomitan/releases/download/2024-09-17/YUE.Freq.Words.hk.Frequency.zip)
 
 ## Screenshots
 
