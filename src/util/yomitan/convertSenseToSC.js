@@ -161,7 +161,7 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
     ? {
         tag: 'div',
         style: {
-          marginBottom: '0.5em',
+          marginBottom: '0.3em',
         },
         data: {
           wordshk: 'explanation',
@@ -171,11 +171,11 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
     : {
         tag: 'li',
         style: {
-          marginBottom: isExplanation ? '0.3em' : '0.5em',
-          listStyleType: isExplanation ? 'none' : 'circle',
+          marginBottom: '0.5em',
+          listStyleType: 'circle',
         },
         data: {
-          wordshk: isExplanation ? 'explanation' : 'example',
+          wordshk: 'example',
         },
         content: languageDivArray,
       };
