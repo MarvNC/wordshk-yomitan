@@ -157,17 +157,28 @@ function convertLanguageDataToLiSC(languageData, isExplanation) {
   /**
    * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
    */
-  const sc = {
-    tag: 'li',
-    style: {
-      marginBottom: isExplanation ? '0.3em' : '0.5em',
-      listStyleType: isExplanation ? 'none' : 'circle',
-    },
-    data: {
-      wordshk: isExplanation ? 'explanation' : 'example',
-    },
-    content: languageDivArray,
-  };
+  const sc = isExplanation
+    ? {
+        tag: 'div',
+        style: {
+          marginBottom: '0.5em',
+        },
+        data: {
+          wordshk: 'explanation',
+        },
+        content: languageDivArray,
+      }
+    : {
+        tag: 'li',
+        style: {
+          marginBottom: isExplanation ? '0.3em' : '0.5em',
+          listStyleType: isExplanation ? 'none' : 'circle',
+        },
+        data: {
+          wordshk: isExplanation ? 'explanation' : 'example',
+        },
+        content: languageDivArray,
+      };
 
   return sc;
 }
@@ -215,14 +226,20 @@ function convertLanguageEntryToListItems(
      * @type {import('yomichan-dict-builder/dist/types/yomitan/termbank').StructuredContent}
      */
     const singleLanguageLi = {
-      tag: 'li',
-      lang: languageInfo.langCode,
-      content: liChildren,
+      tag: 'ul',
       style: {
-        listStyleType: 'none',
+        paddingLeft: '0',
       },
-      data: {
-        wordshk: languageInfo.langCode,
+      content: {
+        tag: 'li',
+        lang: languageInfo.langCode,
+        content: liChildren,
+        style: {
+          listStyleType: 'none',
+        },
+        data: {
+          wordshk: languageInfo.langCode,
+        },
       },
     };
 
@@ -230,7 +247,7 @@ function convertLanguageEntryToListItems(
     const cjkLangs = ['yue', 'zho', 'jpn', 'kor', 'lzh'];
     const isCJK = cjkLangs.includes(language);
     // @ts-ignore
-    singleLanguageLi.style.fontSize = isCJK
+    singleLanguageLi.content.style.fontSize = isCJK
       ? '1.2em'
       : isExplanation
       ? '1em'
